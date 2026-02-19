@@ -1,2 +1,2 @@
 # pqugo
-Pablo's Hugo Theme
+Hugo Theme
