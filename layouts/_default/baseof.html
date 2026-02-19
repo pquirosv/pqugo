@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang='{{ .Site.LanguageCode | default "es"}}'>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{{ if .IsHome }}{{ .Site.Title }}{{ else }}{{ .Title }} | {{ .Site.Title }}{{ end }}</title>
+    {{ with resources.Get "css/main.css" }}
+      {{ if hugo.IsDevelopment }}
+        <link rel="stylesheet" href="{{ .RelPermalink }}" />
+      {{ else }}
+        {{ with . | minify | fingerprint }}
+          <link rel="stylesheet" href="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}" crossorigin="anonymous" />
+        {{ end }}
+      {{ end }}
+    {{ end }}
+  </head>
+  <body>
+    <main>
+      <header>
+        {{ partial "menu.html" . }}
+      </header>
+      {{ if not .IsHome }}
+        <h1 class="title">{{ .Title }}</h1>
+        <hr class="title-hr" />
+      {{ end }}
+      {{ block "main" . }}{{ end }}
+    </main>
+    <footer>
+      {{ partial "footer.html" . }}
+    </footer>
+  </body>
+</html>

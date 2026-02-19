@@ -1,2 +1,0 @@
-# pqugo
-Hugo Theme

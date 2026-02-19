@@ -1,0 +1,28 @@
+baseURL = 'https://pabloquiros.click/'
+languageCode = 'es'
+title = 'Pablo Quirós'
+
+enableRobotsTXT = true
+
+defaultContentLanguage = 'es'
+defaultContentLanguageInSubdir = false
+
+[languages]
+  [languages.es]
+    languageName = 'Español'
+    languageCode = 'es'
+    weight = 1
+    contentDir = 'content/es'
+  [languages.en]
+    languageName = 'English'
+    languageCode = 'en'
+    weight = 2
+    contentDir = 'content/en'
+
+[markup.goldmark.renderer]
+# Required for trusted raw HTML used in Markdown content (details/audio/div layout blocks).
+unsafe = true
+
+[markup.goldmark.parser.attribute]
+block = true
+title = true
