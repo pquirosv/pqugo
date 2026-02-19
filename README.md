@@ -1,4 +1,6 @@
-# PHUGO
+# Phugo
+
+### Pablo's theme
 
 Simple Hugo Theme that I use in my own webpage [pabloquiros.click](https://pabloquiros.click)
 
