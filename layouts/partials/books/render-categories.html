@@ -1,0 +1,15 @@
+{{- $books := .books | default (slice) -}}
+{{- $categories := .categories | default (slice) -}}
+
+{{- range $categories -}}
+  {{- $category := . -}}
+  {{- $categoryBooks := where $books "category_key" $category -}}
+  {{- if gt (len $categoryBooks) 0 -}}
+    <h3 class="books-category-title">{{ partial "books/category-label.html" $category }}</h3>
+    <ul class="books-category-list">
+      {{- range $categoryBooks -}}
+        <li><strong>{{ .title }}</strong>, {{ .author }}</li>
+      {{- end -}}
+    </ul>
+  {{- end -}}
+{{- end -}}

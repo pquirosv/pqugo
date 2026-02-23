@@ -165,6 +165,33 @@ audio {
     padding-top: 10px;
 }
 
+/* Libros */
+
+.books-year {
+    text-align: center;
+}
+
+.books-category-title {
+    text-decoration: underline;
+    margin-bottom: 0.2em;
+}
+
+.books-category-list {
+    margin-top: 0;
+}
+
+.books-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    
+}
+
+.books-tag {
+    font-size: 0.8rem;
+    white-space: nowrap;
+}
+
 /* Responsive adjustments */
 
 @media (orientation: portrait) and (max-width: 500px) {

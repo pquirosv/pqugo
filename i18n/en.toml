@@ -15,3 +15,78 @@ other = "Movies"
 
 [menu_github]
 other = "GitHub"
+
+[books_category_narrative]
+other = "Narrative"
+
+[books_category_essay]
+other = "Essay"
+
+[books_category_poetry]
+other = "Poetry"
+
+[books_all_tags_title]
+other = "Filter by subcategory"
+
+[books_tag_page_title]
+other = "Books tagged with"
+
+[books_empty_all]
+other = "No books are available yet."
+
+[books_empty_tag]
+other = "There are no books for this tag yet."
+
+[books_subcategory_biography]
+other = "Biography"
+
+[books_subcategory_economy]
+other = "Economy"
+
+[books_subcategory_history]
+other = "History"
+
+[books_subcategory_novel]
+other = "Novel"
+
+[books_subcategory_philosophy]
+other = "Philosophy"
+
+[books_subcategory_poetry]
+other = "Poetry"
+
+[books_subcategory_politics]
+other = "Politics"
+
+[books_subcategory_science_fiction]
+other = "Science fiction"
+
+[books_subcategory_sociology]
+other = "Sociology"
+
+[books_subcategory_chronicle]
+other = "Chronicle"
+
+[books_subcategory_epic]
+other = "Epic"
+
+[books_subcategory_experimental]
+other = "Experimental"
+
+[books_subcategory_fantasy]
+other = "Fantasy"
+
+[books_subcategory_mythology]
+other = "Mythology"
+
+[books_subcategory_theatre]
+other = "Theatre"
+
+[books_subcategory_tale]
+other = "Tale"
+
+[books_all_with_year_empty]
+other = "No books with year are available yet."
+
+[books_category_theatre]
+other = "Theatre"

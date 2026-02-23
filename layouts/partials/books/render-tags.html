@@ -1,0 +1,24 @@
+{{- $books := . | default (slice) -}}
+{{- $allTags := slice -}}
+{{- $tagsBase := "books/tags" -}}
+{{- if eq site.Language.Lang "es" -}}
+  {{- $tagsBase = "libros/tags" -}}
+{{- end -}}
+
+{{- range $books -}}
+  {{- range .subcategories -}}
+    {{- $allTags = $allTags | append . -}}
+  {{- end -}}
+{{- end -}}
+{{- $allTags = sort (uniq $allTags) -}}
+
+{{- if gt (len $allTags) 0 -}}
+  <h3 style="text-align: center">{{ i18n "books_all_tags_title" }}</h3>
+  <p class="books-tags">
+    {{- range $allTags -}}
+      {{- $term := . -}}
+      {{- $label := partial "books/subcategory-label.html" $term -}}
+      <a class="books-tag" href="{{ relLangURL (printf "%s/%s/" $tagsBase (urlize $term)) }}">#{{ $label }}</a>
+    {{- end -}}
+  </p>
+{{- end -}}

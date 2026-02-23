@@ -1,0 +1,15 @@
+{{- $category := . -}}
+{{- $upper := upper (printf "%v" $category) -}}
+{{- $lower := lower (printf "%v" $category) -}}
+
+{{- if or (eq $upper "N") (eq $lower "narrative") -}}
+  {{- i18n "books_category_narrative" -}}
+{{- else if or (eq $upper "E") (eq $lower "essay") -}}
+  {{- i18n "books_category_essay" -}}
+{{- else if or (eq $upper "P") (eq $lower "poetry") -}}
+  {{- i18n "books_category_poetry" -}}
+{{- else if or (eq $upper "T") (eq $lower "theatre") -}}
+  {{- i18n "books_category_theatre" -}}
+{{- else -}}
+  {{- humanize (replace $category "-" " ") -}}
+{{- end -}}

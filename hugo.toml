@@ -13,11 +13,22 @@ defaultContentLanguageInSubdir = false
     languageCode = 'es'
     weight = 1
     contentDir = 'content/es'
+    [languages.es.permalinks.taxonomy]
+      tags = '/libros/tags/'
+    [languages.es.permalinks.term]
+      tags = '/libros/tags/:slug/'
   [languages.en]
     languageName = 'English'
     languageCode = 'en'
     weight = 2
     contentDir = 'content/en'
+    [languages.en.permalinks.taxonomy]
+      tags = '/books/tags/'
+    [languages.en.permalinks.term]
+      tags = '/books/tags/:slug/'
+
+[taxonomies]
+  tag = 'tags'
 
 [markup.goldmark.renderer]
 # Required for trusted raw HTML used in Markdown content (details/audio/div layout blocks).

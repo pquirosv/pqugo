@@ -1,0 +1,47 @@
+{{ define "main" }}
+  {{- $allBooks := .Site.Data.books.books | default (slice) -}}
+  {{- $termSlug := urlize .Data.Term -}}
+  {{- $termLabel := partial "books/subcategory-label.html" .Data.Term -}}
+  {{- $filteredBooks := slice -}}
+
+  {{- range $allBooks -}}
+    {{- $matches := false -}}
+    {{- range .subcategories -}}
+      {{- if eq (urlize .) $termSlug -}}
+        {{- $matches = true -}}
+      {{- end -}}
+    {{- end -}}
+    {{- if $matches -}}
+      {{- $filteredBooks = $filteredBooks | append . -}}
+    {{- end -}}
+  {{- end -}}
+
+  <p>{{ i18n "books_tag_page_title" }} <strong>{{ $termLabel }}</strong>.</p>
+
+  {{- if eq (len $filteredBooks) 0 -}}
+    <p>{{ i18n "books_empty_tag" }}</p>
+  {{- else -}}
+    {{- $preferred := slice "N" "T" "E" "P" -}}
+    {{- $orderedCategories := slice -}}
+
+    {{- range $preferred -}}
+      {{- if gt (len (where $filteredBooks "category_key" .)) 0 -}}
+        {{- $orderedCategories = $orderedCategories | append . -}}
+      {{- end -}}
+    {{- end -}}
+
+    {{- $extras := slice -}}
+    {{- range $filteredBooks -}}
+      {{- if not (in $preferred .category_key) -}}
+        {{- $extras = $extras | append .category_key -}}
+      {{- end -}}
+    {{- end -}}
+
+    {{- range (sort (uniq $extras)) -}}
+      {{- $orderedCategories = $orderedCategories | append . -}}
+    {{- end -}}
+
+    {{ partial "books/render-categories.html" (dict "books" $filteredBooks "categories" $orderedCategories) }}
+    {{ partial "books/render-tags.html" $allBooks }}
+  {{- end -}}
+{{ end }}

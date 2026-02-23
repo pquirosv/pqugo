@@ -1,0 +1,31 @@
+{{- $books := .Site.Data.books.books | default (slice) -}}
+
+{{- if eq (len $books) 0 -}}
+  <p>{{ i18n "books_empty_all" }}</p>
+{{- else -}}
+  {{- $datedBooks := where $books "year" "ne" nil -}}
+  {{- $hasDatedBooks := false -}}
+
+  {{- range seq 2100 -1 2015 -}}
+    {{- $year := . -}}
+    {{- $yearBooks := where $datedBooks "year" $year -}}
+    {{- if gt (len $yearBooks) 0 -}}
+      {{- $hasDatedBooks = true -}}
+      <h2 class="books-year">{{ $year }}</h2>
+      <div class="section-grid">
+        <div class="section-left">
+          {{ partial "books/render-categories.html" (dict "books" $yearBooks "categories" (slice "N" "T")) }}
+        </div>
+        <div class="section-right">
+          {{ partial "books/render-categories.html" (dict "books" $yearBooks "categories" (slice "E" "P")) }}
+        </div>
+      </div>
+    {{- end -}}
+  {{- end -}}
+
+  {{- if not $hasDatedBooks -}}
+    <p>{{ i18n "books_all_with_year_empty" }}</p>
+  {{- else -}}
+    {{ partial "books/render-tags.html" $datedBooks }}
+  {{- end -}}
+{{- end -}}

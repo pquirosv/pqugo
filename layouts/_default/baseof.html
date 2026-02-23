@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>{{ if .IsHome }}{{ .Site.Title }}{{ else }}{{ .Title }} | {{ .Site.Title }}{{ end }}</title>
+    <title>{{ if .IsHome }}{{ .Site.Title }}{{ else if and (eq .Kind "term") (eq .Data.Plural "tags") }}{{ partial "books/subcategory-label.html" .Title }} | {{ .Site.Title }}{{ else }}{{ .Title }} | {{ .Site.Title }}{{ end }}</title>
     {{ with resources.Get "css/main.css" }}
       {{ if hugo.IsDevelopment }}
         <link rel="stylesheet" href="{{ .RelPermalink }}" />
@@ -20,7 +20,13 @@
         {{ partial "menu.html" . }}
       </header>
       {{ if not .IsHome }}
-        <h1 class="title">{{ .Title }}</h1>
+        <h1 class="title">
+          {{- if and (eq .Kind "term") (eq .Data.Plural "tags") -}}
+            {{- partial "books/subcategory-label.html" .Title -}}
+          {{- else -}}
+            {{- .Title -}}
+          {{- end -}}
+        </h1>
         <hr class="title-hr" />
       {{ end }}
       {{ block "main" . }}{{ end }}

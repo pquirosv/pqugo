@@ -1,0 +1,22 @@
+{{ define "main" }}
+  {{- $terms := slice -}}
+  {{- with .Data.Terms -}}
+    {{- $terms = .Alphabetical -}}
+  {{- end -}}
+  {{- $tagsBase := "books/tags" -}}
+  {{- if eq site.Language.Lang "es" -}}
+    {{- $tagsBase = "libros/tags" -}}
+  {{- end -}}
+  {{- if eq (len $terms) 0 -}}
+    <p>{{ i18n "books_empty_tag" }}</p>
+  {{- else -}}
+    <h2>{{ i18n "books_all_tags_title" }}</h2>
+    <p class="books-tags">
+      {{- range $terms -}}
+        {{- $termName := .Term -}}
+        {{- $label := partial "books/subcategory-label.html" $termName -}}
+        <a class="books-tag" style="font-size: 0.9em;" href="{{ relLangURL (printf "%s/%s/" $tagsBase (urlize $termName)) }}">#{{ $label }}</a>
+      {{- end -}}
+    </p>
+  {{- end -}}
+{{ end }}
