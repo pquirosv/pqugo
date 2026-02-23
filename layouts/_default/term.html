@@ -53,6 +53,6 @@
     {{- end -}}
 
     {{ partial "books/render-categories.html" (dict "books" $filteredBooks "categories" $orderedCategories) }}
-    {{ partial "books/render-tags.html" $allBooks }}
   {{- end -}}
+  {{ partial "books/render-tags.html" $allBooks }}
 {{ end }}
