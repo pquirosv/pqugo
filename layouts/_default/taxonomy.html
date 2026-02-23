@@ -15,7 +15,7 @@
       {{- range $terms -}}
         {{- $termName := .Term -}}
         {{- $label := partial "books/subcategory-label.html" $termName -}}
-        <a class="books-tag" style="font-size: 0.9em;" href="{{ relLangURL (printf "%s/%s/" $tagsBase (urlize $termName)) }}">#{{ $label }}</a>
+        <a class="books-tag" href="{{ relLangURL (printf "%s/%s/" $tagsBase (urlize $termName)) }}">#{{ $label }}</a>
       {{- end -}}
     </p>
   {{- end -}}

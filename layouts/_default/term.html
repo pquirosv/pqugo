@@ -1,7 +1,18 @@
 {{ define "main" }}
   {{- $allBooks := .Site.Data.books.books | default (slice) -}}
-  {{- $termSlug := urlize .Data.Term -}}
-  {{- $termLabel := partial "books/subcategory-label.html" .Data.Term -}}
+  {{- $termRaw := "" -}}
+  {{- with .Data.Term -}}
+    {{- $termRaw = printf "%v" . -}}
+  {{- end -}}
+  {{- $termSlug := urlize $termRaw -}}
+  {{- if eq $termSlug "" -}}
+    {{- $pathParts := split (trim .RelPermalink "/") "/" -}}
+    {{- if gt (len $pathParts) 0 -}}
+      {{- $termSlug = index $pathParts (sub (len $pathParts) 1) -}}
+    {{- end -}}
+  {{- end -}}
+  {{- $labelSource := $termRaw | default $termSlug -}}
+  {{- $termLabel := partial "books/subcategory-label.html" $labelSource -}}
   {{- $filteredBooks := slice -}}
 
   {{- range $allBooks -}}
