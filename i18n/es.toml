@@ -88,5 +88,8 @@ other = "Teatro"
 [books_subcategory_tale]
 other = "Cuento"
 
+[books_subcategory_technology]
+other = "Tecnología"
+
 [books_all_with_year_empty]
 other = "Todavía no hay libros con año."

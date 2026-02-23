@@ -85,6 +85,9 @@ other = "Theatre"
 [books_subcategory_tale]
 other = "Tale"
 
+[books_subcategory_technology]
+other = "Technology"
+
 [books_all_with_year_empty]
 other = "No books with year are available yet."
 
