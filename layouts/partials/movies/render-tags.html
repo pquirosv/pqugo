@@ -1,0 +1,51 @@
+{{- $movies := slice -}}
+{{- $allTags := slice -}}
+{{- $renderWhenEmpty := false -}}
+
+{{- if reflect.IsMap . -}}
+  {{- with index . "movies" -}}
+    {{- $movies = . -}}
+  {{- end -}}
+  {{- with index . "terms" -}}
+    {{- $allTags = . -}}
+  {{- end -}}
+  {{- with index . "renderWhenEmpty" -}}
+    {{- $renderWhenEmpty = . -}}
+  {{- end -}}
+{{- else -}}
+  {{- $movies = . | default (slice) -}}
+{{- end -}}
+
+{{- $tagsBase := "movies/tags" -}}
+{{- if eq site.Language.Lang "es" -}}
+  {{- $tagsBase = "peliculas/tags" -}}
+{{- end -}}
+
+{{- $subcategories := site.Data.movies.subcategories | default (slice) -}}
+
+{{- if eq (len $allTags) 0 -}}
+  {{- if gt (len $movies) 0 -}}
+    {{- range $movies -}}
+      {{- range .subcategories -}}
+        {{- $allTags = $allTags | append . -}}
+      {{- end -}}
+    {{- end -}}
+  {{- else -}}
+    {{- range $subcategories -}}
+      {{- with .slug -}}
+        {{- $allTags = $allTags | append . -}}
+      {{- end -}}
+    {{- end -}}
+  {{- end -}}
+  {{- $allTags = sort (uniq $allTags) -}}
+{{- end -}}
+
+{{- if or (gt (len $allTags) 0) $renderWhenEmpty -}}
+  <p class="books-tags">
+    {{- range $allTags -}}
+      {{- $term := printf "%v" . -}}
+      {{- $label := partial "movies/subcategory-label.html" $term -}}
+      <a class="books-tag" href="{{ relLangURL (printf "%s/%s/" $tagsBase (urlize $term)) }}">#{{ $label }}</a>
+    {{- end -}}
+  </p>
+{{- end -}}

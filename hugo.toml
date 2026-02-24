@@ -14,21 +14,26 @@ defaultContentLanguageInSubdir = false
     weight = 1
     contentDir = 'content/es'
     [languages.es.permalinks.taxonomy]
-      tags = '/libros/tags/'
+      book_tags = '/libros/tags/'
+      movie_tags = '/peliculas/tags/'
     [languages.es.permalinks.term]
-      tags = '/libros/tags/:slug/'
+      book_tags = '/libros/tags/:slug/'
+      movie_tags = '/peliculas/tags/:slug/'
   [languages.en]
     languageName = 'English'
     languageCode = 'en'
     weight = 2
     contentDir = 'content/en'
     [languages.en.permalinks.taxonomy]
-      tags = '/books/tags/'
+      book_tags = '/books/tags/'
+      movie_tags = '/movies/tags/'
     [languages.en.permalinks.term]
-      tags = '/books/tags/:slug/'
+      book_tags = '/books/tags/:slug/'
+      movie_tags = '/movies/tags/:slug/'
 
 [taxonomies]
-  tag = 'tags'
+  book_tag = 'book_tags'
+  movie_tag = 'movie_tags'
 
 [markup.goldmark.renderer]
 # Required for trusted raw HTML used in Markdown content (details/audio/div layout blocks).

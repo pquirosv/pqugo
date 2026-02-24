@@ -1,0 +1,17 @@
+{{ define "main" }}
+  {{- $subcategories := .Site.Data.movies.subcategories | default (slice) -}}
+  {{- $terms := slice -}}
+  {{- range $subcategories -}}
+    {{- $slug := lower (printf "%v" .slug) -}}
+    {{- if ne $slug "" -}}
+      {{- $terms = $terms | append $slug -}}
+    {{- end -}}
+  {{- end -}}
+
+  {{- $terms = sort (uniq $terms) -}}
+  {{- if eq (len $terms) 0 -}}
+    <p>{{ i18n "movies_empty_tag" }}</p>
+  {{- else -}}
+    {{- partial "movies/render-tags.html" (dict "terms" $terms "renderWhenEmpty" true) -}}
+  {{- end -}}
+{{ end }}

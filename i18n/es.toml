@@ -96,3 +96,60 @@ other = "Cultura"
 
 [books_all_with_tab_empty]
 other = "Todavía no hay libros con tags cargados."
+
+[movies_empty_all]
+other = "Todavía no hay películas cargadas."
+
+[movies_author_label]
+other = "Autor"
+
+[movies_cast_label]
+other = "Reparto"
+
+[movies_all_tags_title]
+other = "Filtrar por categoría"
+
+[movies_tag_page_title]
+other = "Películas con la etiqueta"
+
+[movies_empty_tag]
+other = "No hay películas para esta etiqueta."
+
+[movies_all_with_tab_empty]
+other = "Todavía no hay películas con tags cargadas."
+
+[movies_subcategory_comedy]
+other = "Comedia"
+
+[movies_subcategory_musical]
+other = "Musical"
+
+[movies_subcategory_animation]
+other = "Animación"
+
+[movies_subcategory_fantasy]
+other = "Fantasía"
+
+[movies_subcategory_documentary]
+other = "Documental"
+
+[movies_subcategory_tv_series]
+other = "Serie de TV"
+
+[movies_subcategory_drama]
+other = "Drama"
+
+[movies_subcategory_romance]
+other = "Romance"
+
+[movies_subcategory_thriller]
+other = "Thriller"
+
+[movies_subcategory_science_fiction]
+other = "Ciencia ficción"
+
+[movies_subcategory_adventure]
+other = "Aventuras"
+
+[movies_subcategory_western]
+other = "Western"

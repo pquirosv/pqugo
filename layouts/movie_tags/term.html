@@ -1,0 +1,31 @@
+{{ define "main" }}
+  {{- $allMovies := .Site.Data.movies.movies | default (slice) -}}
+  {{- $termRaw := printf "%v" (.Data.Term | default "") -}}
+  {{- $termSlug := urlize $termRaw -}}
+  {{- $labelSource := $termRaw | default $termSlug -}}
+  {{- $termLabel := partial "movies/subcategory-label.html" $labelSource -}}
+  {{- $filteredMovies := slice -}}
+
+  {{- range $allMovies -}}
+    {{- $matches := false -}}
+    {{- range .subcategories -}}
+      {{- if eq (urlize .) $termSlug -}}
+        {{- $matches = true -}}
+      {{- end -}}
+    {{- end -}}
+    {{- if $matches -}}
+      {{- $filteredMovies = $filteredMovies | append . -}}
+    {{- end -}}
+  {{- end -}}
+
+  <p>{{ i18n "movies_tag_page_title" }} <strong>{{ $termLabel }}</strong>.</p>
+
+  {{- if eq (len $filteredMovies) 0 -}}
+    <p>{{ i18n "movies_empty_tag" }}</p>
+  {{- else -}}
+    {{ partial "movies/render-grid.html" $filteredMovies }}
+  {{- end -}}
+
+  <h4 class="filter-books">{{ i18n "movies_all_tags_title" }}</h4>
+  {{ partial "movies/render-tags.html" $allMovies }}
+{{ end }}

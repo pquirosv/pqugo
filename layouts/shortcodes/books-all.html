@@ -9,13 +9,13 @@
     {{- $years = $years | append .year -}}
   {{- end -}}
   {{- $years = sort (uniq $years) "value" "desc" -}}
-  {{- $hasDatedBooks := false -}}
+  {{- $hasTaggedBooks := false -}}
 
   {{- range $years -}}
     {{- $year := . -}}
     {{- $yearBooks := where $datedBooks "year" $year -}}
     {{- if gt (len $yearBooks) 0 -}}
-      {{- $hasDatedBooks = true -}}
+      {{- $hasTaggedBooks = true -}}
       <h2 class="books-year">{{ $year }}</h2>
       <div class="section-grid">
         <div class="section-left">
@@ -28,7 +28,7 @@
     {{- end -}}
   {{- end -}}
 
-  {{- if not $hasDatedBooks -}}
+  {{- if not $hasTaggedBooks -}}
     <p>{{ i18n "books_all_with_tab_empty" }}</p>
   {{- else -}}
     <h4 class="filter-books">{{ i18n "books_all_tags_title" }}</h4>

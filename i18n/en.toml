@@ -96,3 +96,60 @@ other = "Theatre"
 
 [books_all_with_tab_empty]
 other = "No books with tags are available yet."
+
+[movies_empty_all]
+other = "No movies are available yet."
+
+[movies_author_label]
+other = "Author"
+
+[movies_cast_label]
+other = "Cast"
+
+[movies_all_tags_title]
+other = "Filter by category"
+
+[movies_tag_page_title]
+other = "Movies tagged with"
+
+[movies_empty_tag]
+other = "There are no movies for this tag yet."
+
+[movies_all_with_tab_empty]
+other = "No movies with tags are available yet."
+
+[movies_subcategory_comedy]
+other = "Comedy"
+
+[movies_subcategory_musical]
+other = "Musical"
+
+[movies_subcategory_animation]
+other = "Animation"
+
+[movies_subcategory_fantasy]
+other = "Fantasy"
+
+[movies_subcategory_documentary]
+other = "Documentary"
+
+[movies_subcategory_tv_series]
+other = "TV series"
+
+[movies_subcategory_drama]
+other = "Drama"
+
+[movies_subcategory_romance]
+other = "Romance"
+
+[movies_subcategory_thriller]
+other = "Thriller"
+
+[movies_subcategory_science_fiction]
+other = "Science fiction"
+
+[movies_subcategory_adventure]
+other = "Adventure"
+
+[movies_subcategory_western]
+other = "Western"

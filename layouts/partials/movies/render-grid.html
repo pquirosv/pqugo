@@ -1,0 +1,32 @@
+{{- $movies := . | default (slice) -}}
+
+<div class="movies-grid">
+  {{- range $movies -}}
+    {{- $title := .title | default "" -}}
+    {{- $author := .author | default .director | default "" -}}
+    {{- $image := .image | default "" -}}
+    <article class="movie-card">
+      <div class="movie-poster-wrap">
+        {{- if ne $image "" -}}
+          <img
+            class="movie-poster"
+            src="{{ relURL (printf "movies/photos/%s" $image) }}"
+            alt="{{ $title }}"
+            loading="lazy"
+          />
+        {{- else -}}
+          <div class="movie-poster movie-poster-placeholder" aria-hidden="true"></div>
+        {{- end -}}
+      </div>
+      <h3 class="movie-title">{{ $title }}</h3>
+      {{- if ne $author "" -}}
+        <p class="movie-author">{{ i18n "movies_author_label" }}: <strong>{{ $author }}</strong></p>
+      {{- end -}}
+      {{- with .cast -}}
+        {{- if gt (len .) 0 -}}
+          <p class="movie-cast"><strong>{{ i18n "movies_cast_label" }}: {{ delimit . ", " }}</strong></p>
+        {{- end -}}
+      {{- end -}}
+    </article>
+  {{- end -}}
+</div>

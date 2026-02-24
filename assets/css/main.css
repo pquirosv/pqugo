@@ -195,6 +195,56 @@ audio {
     font-style: oblique;
 }
 
+.filter-movies {
+    text-align: center;
+    font-style: oblique;
+}
+
+/* Peliculas */
+
+.movies-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 14px;
+}
+
+.movie-card {
+    display: flex;
+    flex-direction: column;
+}
+
+.movie-poster-wrap {
+    border-radius: 5px;
+    overflow: hidden;
+    background: #0d061b;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.35);
+}
+
+.movie-poster {
+    display: block;
+    width: 100%;
+    aspect-ratio: 2 / 3;
+    object-fit: cover;
+}
+
+.movie-poster-placeholder {
+    border: 1px dashed var(--color-muted);
+}
+
+.movie-title {
+    font-size: 1rem;
+    margin: 8px 0 2px;
+    line-height: 1.2;
+}
+
+.movie-author,
+.movie-cast {
+    margin: 0;
+    font-size: 0.8rem;
+    color: var(--color-muted);
+    line-height: 1.35;
+}
+
 /* Responsive adjustments */
 
 @media (orientation: portrait) and (max-width: 500px) {
@@ -206,6 +256,10 @@ audio {
 @media (max-width: 770px){
     .section-grid{
         grid-template-columns: 1fr;
+    }
+    .movies-grid {
+        grid-template-columns: repeat(auto-fill, minmax(132px, 1fr));
+        gap: 12px;
     }
     :root {
         --w: 95%;

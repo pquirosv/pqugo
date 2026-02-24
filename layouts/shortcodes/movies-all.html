@@ -1,0 +1,54 @@
+{{- $movies := .Site.Data.movies.movies | default (slice) -}}
+
+{{- if eq (len $movies) 0 -}}
+  <p>{{ i18n "movies_empty_all" }}</p>
+{{- else -}}
+  {{- $taggedMovies := slice -}}
+  {{- range $movies -}}
+    {{- $movie := . -}}
+    {{- with $movie.subcategories -}}
+      {{- if gt (len .) 0 -}}
+        {{- $taggedMovies = $taggedMovies | append $movie -}}
+      {{- end -}}
+    {{- end -}}
+  {{- end -}}
+  {{- $hasTaggedMovies := gt (len $taggedMovies) 0 -}}
+
+  <div class="movies-grid">
+    {{- range $movies -}}
+      {{- $title := .title | default "" -}}
+      {{- $author := .author | default .director | default "" -}}
+      {{- $image := .image | default "" -}}
+      <article class="movie-card">
+        <div class="movie-poster-wrap">
+          {{- if ne $image "" -}}
+            <img
+              class="movie-poster"
+              src="{{ relURL (printf "movies/photos/%s" $image) }}"
+              alt="{{ $title }}"
+              loading="lazy"
+            />
+          {{- else -}}
+            <div class="movie-poster movie-poster-placeholder" aria-hidden="true"></div>
+          {{- end -}}
+        </div>
+        <h3 class="movie-title">{{ $title }}</h3>
+        {{- if ne $author "" -}}
+          <p class="movie-author">{{ i18n "movies_author_label" }}: <strong>{{ $author }}</strong></p>
+        {{- end -}}
+        {{- with .cast -}}
+          {{- if gt (len .) 0 -}}
+            <p class="movie-cast">{{ i18n "movies_cast_label" }}: <strong>{{ delimit . ", " }}</strong></p>
+          {{- end -}}
+        {{- end -}}
+      </article>
+    {{- end -}}
+  </div>
+
+  {{- if not $hasTaggedMovies -}}
+    <p>{{ i18n "movies_all_with_tab_empty" }}</p>
+  {{- else -}}
+    <h4 class="filter-movies">{{ i18n "movies_all_tags_title" }}</h4>
+    {{ partial "movies/render-tags.html" $taggedMovies }}
+  {{- end -}}
+{{- end -}}
