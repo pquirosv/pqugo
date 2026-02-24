@@ -1,15 +1,27 @@
-{{- $subcategory := lower (printf "%v" .) -}}
-{{- $subcategories := site.Data.books.subcategory_aliases -}}
+{{- $input := lower (printf "%v" .) -}}
+{{- $inputKey := urlize $input -}}
+{{- $subcategories := site.Data.books.subcategories | default (slice) -}}
 
 {{- $i18nKey := "" -}}
 {{- range $subcategories -}}
-  {{- if and (eq $i18nKey "") (in .aliases $subcategory) -}}
-    {{- $i18nKey = .i18n -}}
+  {{- $subcategory := . -}}
+  {{- $slug := lower (printf "%v" $subcategory.slug) -}}
+  {{- if and (eq $i18nKey "") (eq (urlize $slug) $inputKey) -}}
+    {{- $i18nKey = $subcategory.i18n -}}
+  {{- end -}}
+
+  {{- if and (eq $i18nKey "") (reflect.IsSlice $subcategory.aliases) -}}
+    {{- range $subcategory.aliases -}}
+      {{- $alias := lower (printf "%v" .) -}}
+      {{- if and (eq $i18nKey "") (eq (urlize $alias) $inputKey) -}}
+        {{- $i18nKey = $subcategory.i18n -}}
+      {{- end -}}
+    {{- end -}}
   {{- end -}}
 {{- end -}}
 
 {{- if ne $i18nKey "" -}}
   {{- i18n $i18nKey -}}
 {{- else -}}
-  {{- title (replace $subcategory "-" " ") -}}
+  {{- title (replace $input "-" " ") -}}
 {{- end -}}

@@ -1,29 +1,27 @@
 {{ define "main" }}
   {{- $books := .Site.Data.books.books | default (slice) -}}
-  {{- $terms := slice -}}
-  {{- $usedSlugs := slice -}}
+  {{- $subcategories := .Site.Data.books.subcategories | default (slice) -}}
 
-  {{- range $books -}}
-    {{- range .subcategories -}}
-      {{- $terms = $terms | append . -}}
-      {{- $usedSlugs = $usedSlugs | append (urlize .) -}}
+  {{- $slugByKey := dict -}}
+  {{- range $subcategories -}}
+    {{- $slug := lower (printf "%v" .slug) -}}
+    {{- $slugByKey = merge $slugByKey (dict (urlize $slug) $slug) -}}
+
+    {{- if reflect.IsSlice .aliases -}}
+      {{- range .aliases -}}
+        {{- $alias := lower (printf "%v" .) -}}
+        {{- $slugByKey = merge $slugByKey (dict (urlize $alias) $slug) -}}
+      {{- end -}}
     {{- end -}}
   {{- end -}}
 
-  {{- $usedSlugs = uniq $usedSlugs -}}
-
-  {{- range (.Site.Data.books.subcategory_aliases | default (slice)) -}}
-    {{- $canonical := "" -}}
-    {{- range .aliases -}}
-      {{- if and (eq $canonical "") (in $usedSlugs (urlize .)) -}}
-        {{- $canonical = . -}}
-      {{- end -}}
-    {{- end -}}
-    {{- if and (eq $canonical "") (gt (len .aliases) 0) -}}
-      {{- $canonical = index .aliases (sub (len .aliases) 1) -}}
-    {{- end -}}
-    {{- if ne $canonical "" -}}
-      {{- $terms = $terms | append $canonical -}}
+  {{- $terms := slice -}}
+  {{- range $books -}}
+    {{- range .subcategories -}}
+      {{- $raw := lower (printf "%v" .) -}}
+      {{- $key := urlize $raw -}}
+      {{- $slug := index $slugByKey $key | default $raw -}}
+      {{- $terms = $terms | append $slug -}}
     {{- end -}}
   {{- end -}}
 
@@ -33,5 +31,4 @@
   {{- else -}}
     {{- partial "books/render-tags.html" (dict "terms" $terms "showTitle" false) -}}
   {{- end -}}
-  
 {{ end }}
