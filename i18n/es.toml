@@ -29,7 +29,7 @@ other = "Poesía"
 other = "Teatro"
 
 [books_all_tags_title]
-other = "Filtrar por subcategoría"
+other = "Filtrar por categoría"
 
 [books_tag_page_title]
 other = "Libros con la etiqueta"
@@ -91,5 +91,8 @@ other = "Cuento"
 [books_subcategory_technology]
 other = "Tecnología"
 
-[books_all_with_year_empty]
-other = "Todavía no hay libros con año."
+[books_subcategory_culture]
+other = "Cultura"
+
+[books_all_with_tab_empty]
+other = "Todavía no hay libros con tags cargados."

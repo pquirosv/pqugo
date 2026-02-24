@@ -1,16 +1,7 @@
 {{ define "main" }}
   {{- $allBooks := .Site.Data.books.books | default (slice) -}}
-  {{- $termRaw := "" -}}
-  {{- with .Data.Term -}}
-    {{- $termRaw = printf "%v" . -}}
-  {{- end -}}
+  {{- $termRaw := printf "%v" (.Data.Term | default "") -}}
   {{- $termSlug := urlize $termRaw -}}
-  {{- if eq $termSlug "" -}}
-    {{- $pathParts := split (trim .RelPermalink "/") "/" -}}
-    {{- if gt (len $pathParts) 0 -}}
-      {{- $termSlug = index $pathParts (sub (len $pathParts) 1) -}}
-    {{- end -}}
-  {{- end -}}
   {{- $labelSource := $termRaw | default $termSlug -}}
   {{- $termLabel := partial "books/subcategory-label.html" $labelSource -}}
   {{- $filteredBooks := slice -}}
@@ -54,5 +45,6 @@
 
     {{ partial "books/render-categories.html" (dict "books" $filteredBooks "categories" $orderedCategories) }}
   {{- end -}}
+  <h4 class="filter-books">{{ i18n "books_all_tags_title" }}</h4>
   {{ partial "books/render-tags.html" $allBooks }}
 {{ end }}

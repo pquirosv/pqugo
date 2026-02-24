@@ -54,7 +54,6 @@ header {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    padding-top: var(--header-menu-top-gap);
     font-size: 18px;
 }
 
@@ -184,12 +183,16 @@ audio {
     display: flex;
     flex-wrap: wrap;
     gap: 10px;
-    
 }
 
 .books-tag {
     font-size: 0.875rem;
     white-space: nowrap;
+}
+
+.filter-books {
+    text-align: center;
+    font-style: oblique;
 }
 
 /* Responsive adjustments */
@@ -201,9 +204,6 @@ audio {
 }
 
 @media (max-width: 770px){
-    .main {
-        font-size: 14px;
-    }
     .section-grid{
         grid-template-columns: 1fr;
     }

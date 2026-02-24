@@ -1,19 +1,40 @@
-{{- $books := . | default (slice) -}}
+{{- $books := slice -}}
 {{- $allTags := slice -}}
+{{- $showTitle := true -}}
+{{- $renderWhenEmpty := false -}}
+
+{{- if reflect.IsMap . -}}
+  {{- with index . "books" -}}
+    {{- $books = . -}}
+  {{- end -}}
+  {{- with index . "terms" -}}
+    {{- $allTags = . -}}
+  {{- end -}}
+  {{- with index . "showTitle" -}}
+    {{- $showTitle = . -}}
+  {{- end -}}
+  {{- with index . "renderWhenEmpty" -}}
+    {{- $renderWhenEmpty = . -}}
+  {{- end -}}
+{{- else -}}
+  {{- $books = . | default (slice) -}}
+{{- end -}}
+
 {{- $tagsBase := "books/tags" -}}
 {{- if eq site.Language.Lang "es" -}}
   {{- $tagsBase = "libros/tags" -}}
 {{- end -}}
 
-{{- range $books -}}
-  {{- range .subcategories -}}
-    {{- $allTags = $allTags | append . -}}
+{{- if eq (len $allTags) 0 -}}
+  {{- range $books -}}
+    {{- range .subcategories -}}
+      {{- $allTags = $allTags | append . -}}
+    {{- end -}}
   {{- end -}}
+  {{- $allTags = sort (uniq $allTags) -}}
 {{- end -}}
-{{- $allTags = sort (uniq $allTags) -}}
 
-{{- if gt (len $allTags) 0 -}}
-  <h3 style="text-align: center">{{ i18n "books_all_tags_title" }}</h3>
+{{- if or (gt (len $allTags) 0) $renderWhenEmpty -}}
   <p class="books-tags">
     {{- range $allTags -}}
       {{- $term := . -}}

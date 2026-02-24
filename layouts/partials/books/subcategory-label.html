@@ -1,23 +1,5 @@
 {{- $subcategory := lower (printf "%v" .) -}}
-{{- $subcategories := slice
-  (dict "i18n" "books_subcategory_biography" "aliases" (slice "biography" "biografia" ))
-  (dict "i18n" "books_subcategory_economy" "aliases" (slice "economy" "economia"))
-  (dict "i18n" "books_subcategory_history" "aliases" (slice "history" "historia"))
-  (dict "i18n" "books_subcategory_novel" "aliases" (slice "novel" "novela"))
-  (dict "i18n" "books_subcategory_tale" "aliases" (slice "tale" "cuento"))
-  (dict "i18n" "books_subcategory_philosophy" "aliases" (slice "philosophy" "filosofia"))
-  (dict "i18n" "books_subcategory_poetry" "aliases" (slice "poetry" "poesia"))
-  (dict "i18n" "books_subcategory_science_fiction" "aliases" (slice "science-fiction" "ciencia ficcion"))
-  (dict "i18n" "books_subcategory_sociology" "aliases" (slice "sociology" "sociologia"))
-  (dict "i18n" "books_subcategory_chronicle" "aliases" (slice "chronicle" "cronica" ))
-  (dict "i18n" "books_subcategory_epic" "aliases" (slice "epic" "epopeya"))
-  (dict "i18n" "books_subcategory_experimental" "aliases" (slice "experimental"))
-  (dict "i18n" "books_subcategory_fantasy" "aliases" (slice "fantasy" "fantasia" ))
-  (dict "i18n" "books_subcategory_mythology" "aliases" (slice "mythology" "mitologia" ))
-  (dict "i18n" "books_subcategory_theatre" "aliases" (slice "theatre" "teatro" ))
-  (dict "i18n" "books_subcategory_technology" "aliases" (slice "technology" "tecnologia" ))
-  (dict "i18n" "books_subcategory_politics" "aliases" (slice "politics" "politica" ))
--}}
+{{- $subcategories := site.Data.books.subcategory_aliases -}}
 
 {{- $i18nKey := "" -}}
 {{- range $subcategories -}}

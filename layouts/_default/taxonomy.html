@@ -1,23 +1,37 @@
 {{ define "main" }}
+  {{- $books := .Site.Data.books.books | default (slice) -}}
   {{- $terms := slice -}}
-  {{- with .Data.Terms -}}
-    {{- $terms = .Alphabetical -}}
+  {{- $usedSlugs := slice -}}
+
+  {{- range $books -}}
+    {{- range .subcategories -}}
+      {{- $terms = $terms | append . -}}
+      {{- $usedSlugs = $usedSlugs | append (urlize .) -}}
+    {{- end -}}
   {{- end -}}
-  {{- $tagsBase := "books/tags" -}}
-  {{- if eq site.Language.Lang "es" -}}
-    {{- $tagsBase = "libros/tags" -}}
+
+  {{- $usedSlugs = uniq $usedSlugs -}}
+
+  {{- range (.Site.Data.books.subcategory_aliases | default (slice)) -}}
+    {{- $canonical := "" -}}
+    {{- range .aliases -}}
+      {{- if and (eq $canonical "") (in $usedSlugs (urlize .)) -}}
+        {{- $canonical = . -}}
+      {{- end -}}
+    {{- end -}}
+    {{- if and (eq $canonical "") (gt (len .aliases) 0) -}}
+      {{- $canonical = index .aliases (sub (len .aliases) 1) -}}
+    {{- end -}}
+    {{- if ne $canonical "" -}}
+      {{- $terms = $terms | append $canonical -}}
+    {{- end -}}
   {{- end -}}
+
+  {{- $terms = sort (uniq $terms) -}}
   {{- if eq (len $terms) 0 -}}
     <p>{{ i18n "books_empty_tag" }}</p>
   {{- else -}}
-    <h2>{{ i18n "books_all_tags_title" }}</h2>
+    {{- partial "books/render-tags.html" (dict "terms" $terms "showTitle" false) -}}
   {{- end -}}
-  <p class="books-tags">
-    {{- range $terms -}}
-      {{- $termName := .Term -}}
-      {{- $label := partial "books/subcategory-label.html" $termName -}}
-      <a class="books-tag" href="{{ relLangURL (printf "%s/%s/" $tagsBase (urlize $termName)) }}">#{{ $label }}</a>
-    {{- end -}}
-  </p>
   
 {{ end }}

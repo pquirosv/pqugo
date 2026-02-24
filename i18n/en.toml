@@ -26,7 +26,7 @@ other = "Essay"
 other = "Poetry"
 
 [books_all_tags_title]
-other = "Filter by subcategory"
+other = "Filter by category"
 
 [books_tag_page_title]
 other = "Books tagged with"
@@ -88,8 +88,11 @@ other = "Tale"
 [books_subcategory_technology]
 other = "Technology"
 
-[books_all_with_year_empty]
-other = "No books with year are available yet."
+[books_subcategory_culture]
+other = "Culture"
 
 [books_category_theatre]
 other = "Theatre"
+
+[books_all_with_tab_empty]
+other = "No books with tags are available yet."
