@@ -1,8 +1,12 @@
 {{ define "main" }}
-  {{- $terms := partial "taxonomy/build-terms-from-subcategories.html" (dict "subcategories" site.Data.books.subcategories) -}}
+  {{- $terms := .Data.Terms.Alphabetical | default (slice) -}}
   {{- if eq (len $terms) 0 -}}
-    <p>{{ i18n "books_empty_tag" }}</p>
+    <p>No terms available yet.</p>
   {{- else -}}
-    {{- partial "books/render-tags.html" (dict "terms" $terms "showTitle" false) -}}
+    <ul>
+      {{- range $terms -}}
+        <li><a href="{{ .Page.RelPermalink }}">{{ .Page.Title }}</a> ({{ .Count }})</li>
+      {{- end -}}
+    </ul>
   {{- end -}}
 {{ end }}

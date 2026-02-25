@@ -4,18 +4,27 @@
   <p>{{ i18n "books_empty_all" }}</p>
 {{- else -}}
   {{- $datedBooks := where $books "year" "ne" nil -}}
+  {{- $taggedBooks := slice -}}
+  {{- range $datedBooks -}}
+    {{- $book := . -}}
+    {{- with $book.subcategories -}}
+      {{- if gt (len .) 0 -}}
+        {{- $taggedBooks = $taggedBooks | append $book -}}
+      {{- end -}}
+    {{- end -}}
+  {{- end -}}
+  {{- $hasTaggedBooks := gt (len $taggedBooks) 0 -}}
+
   {{- $years := slice -}}
   {{- range $datedBooks -}}
     {{- $years = $years | append .year -}}
   {{- end -}}
   {{- $years = sort (uniq $years) "value" "desc" -}}
-  {{- $hasTaggedBooks := false -}}
 
   {{- range $years -}}
     {{- $year := . -}}
     {{- $yearBooks := where $datedBooks "year" $year -}}
     {{- if gt (len $yearBooks) 0 -}}
-      {{- $hasTaggedBooks = true -}}
       <h2 class="books-year">{{ $year }}</h2>
       <div class="section-grid">
         <div class="section-left">
@@ -28,10 +37,8 @@
     {{- end -}}
   {{- end -}}
 
-  {{- if not $hasTaggedBooks -}}
-    <p>{{ i18n "books_all_with_tab_empty" }}</p>
-  {{- else -}}
+  {{- if $hasTaggedBooks -}}
     <h4 class="filter-books">{{ i18n "books_all_tags_title" }}</h4>
-    {{ partial "books/render-tags.html" $datedBooks }}
+    {{ partial "books/render-tags.html" $taggedBooks }}
   {{- end -}}
 {{- end -}}

@@ -1,0 +1,28 @@
+{{- $ctx := . -}}
+{{- $plural := printf "%v" ($ctx.Data.Plural | default "") -}}
+
+{{- $termLabelPartials := dict
+  "book_tags" "books/subcategory-label.html"
+  "movie_tags" "movies/subcategory-label.html"
+-}}
+
+{{- $taxonomyMenuKeys := dict
+  "book_tags" "menu_books"
+  "movie_tags" "menu_movies"
+-}}
+
+{{- $pageTitle := $ctx.Title -}}
+
+{{- if eq $ctx.Kind "term" -}}
+  {{- $labelPartial := index $termLabelPartials $plural -}}
+  {{- if $labelPartial -}}
+    {{- $pageTitle = partial $labelPartial $ctx.Title -}}
+  {{- end -}}
+{{- else if eq $ctx.Kind "taxonomy" -}}
+  {{- $menuKey := index $taxonomyMenuKeys $plural -}}
+  {{- if $menuKey -}}
+    {{- $pageTitle = i18n $menuKey -}}
+  {{- end -}}
+{{- end -}}
+
+{{- return $pageTitle -}}

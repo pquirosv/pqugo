@@ -16,9 +16,7 @@
 
   {{ partial "movies/render-grid.html" $movies }}
 
-  {{- if not $hasTaggedMovies -}}
-    <p>{{ i18n "movies_all_with_tab_empty" }}</p>
-  {{- else -}}
+  {{- if $hasTaggedMovies -}}
     <h4 class="filter-movies">{{ i18n "movies_all_tags_title" }}</h4>
     {{ partial "movies/render-tags.html" $taggedMovies }}
   {{- end -}}

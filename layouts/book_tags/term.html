@@ -1,0 +1,38 @@
+{{ define "main" }}
+  {{- $allBooks := .Site.Data.books.books | default (slice) -}}
+  {{- $termRaw := printf "%v" (.Data.Term | default "") -}}
+  {{- $termSlug := urlize $termRaw -}}
+  {{- $labelSource := $termRaw | default $termSlug -}}
+  {{- $termLabel := partial "books/subcategory-label.html" $labelSource -}}
+  {{- $filteredBooks := partial "taxonomy/filter-by-term.html" (dict "items" $allBooks "term" $termRaw) -}}
+
+  <p>{{ i18n "books_tag_page_title" }} <strong>{{ $termLabel }}</strong>.</p>
+
+  {{- if eq (len $filteredBooks) 0 -}}
+    <p>{{ i18n "books_empty_tag" }}</p>
+  {{- else -}}
+    {{- $preferred := slice "N" "T" "E" "P" -}}
+    {{- $orderedCategories := slice -}}
+
+    {{- range $preferred -}}
+      {{- if gt (len (where $filteredBooks "category_key" .)) 0 -}}
+        {{- $orderedCategories = $orderedCategories | append . -}}
+      {{- end -}}
+    {{- end -}}
+
+    {{- $extras := slice -}}
+    {{- range $filteredBooks -}}
+      {{- if not (in $preferred .category_key) -}}
+        {{- $extras = $extras | append .category_key -}}
+      {{- end -}}
+    {{- end -}}
+
+    {{- range (sort (uniq $extras)) -}}
+      {{- $orderedCategories = $orderedCategories | append . -}}
+    {{- end -}}
+
+    {{ partial "books/render-categories.html" (dict "books" $filteredBooks "categories" $orderedCategories) }}
+  {{- end -}}
+  <h4 class="filter-books">{{ i18n "books_all_tags_title" }}</h4>
+  {{ partial "books/render-tags.html" $allBooks }}
+{{ end }}

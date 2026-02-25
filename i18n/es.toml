@@ -153,3 +153,7 @@ other = "Aventuras"
 
 [movies_subcategory_western]
 other = "Western"
+
+[movies_subcategory_horror]
+other = "Terror"
+
