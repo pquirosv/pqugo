@@ -1,27 +1,4 @@
-{{- $input := lower (printf "%v" .) -}}
-{{- $inputKey := urlize $input -}}
-{{- $subcategories := site.Data.movies.subcategories | default (slice) -}}
-
-{{- $i18nKey := "" -}}
-{{- range $subcategories -}}
-  {{- $subcategory := . -}}
-  {{- $slug := lower (printf "%v" $subcategory.slug) -}}
-  {{- if and (eq $i18nKey "") (eq (urlize $slug) $inputKey) -}}
-    {{- $i18nKey = $subcategory.i18n -}}
-  {{- end -}}
-
-  {{- if and (eq $i18nKey "") (reflect.IsSlice $subcategory.aliases) -}}
-    {{- range $subcategory.aliases -}}
-      {{- $alias := lower (printf "%v" .) -}}
-      {{- if and (eq $i18nKey "") (eq (urlize $alias) $inputKey) -}}
-        {{- $i18nKey = $subcategory.i18n -}}
-      {{- end -}}
-    {{- end -}}
-  {{- end -}}
-{{- end -}}
-
-{{- if ne $i18nKey "" -}}
-  {{- i18n $i18nKey -}}
-{{- else -}}
-  {{- title (replace $input "-" " ") -}}
-{{- end -}}
+{{- partial "taxonomy/subcategory-label.html" (dict
+  "term" .
+  "subcategories" (site.Data.movies.subcategories | default (slice))
+) -}}

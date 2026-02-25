@@ -1,0 +1,22 @@
+{{- $items := .items | default (slice) -}}
+{{- $term := printf "%v" (.term | default "") -}}
+{{- $field := .field | default "subcategories" -}}
+{{- $termSlug := urlize $term -}}
+{{- $filtered := slice -}}
+
+{{- range $items -}}
+  {{- $values := index . $field | default (slice) -}}
+  {{- $matches := false -}}
+
+  {{- range $values -}}
+    {{- if eq (urlize (printf "%v" .)) $termSlug -}}
+      {{- $matches = true -}}
+    {{- end -}}
+  {{- end -}}
+
+  {{- if $matches -}}
+    {{- $filtered = $filtered | append . -}}
+  {{- end -}}
+{{- end -}}
+
+{{- return $filtered -}}

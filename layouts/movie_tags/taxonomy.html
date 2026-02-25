@@ -1,14 +1,5 @@
 {{ define "main" }}
-  {{- $subcategories := .Site.Data.movies.subcategories | default (slice) -}}
-  {{- $terms := slice -}}
-  {{- range $subcategories -}}
-    {{- $slug := lower (printf "%v" .slug) -}}
-    {{- if ne $slug "" -}}
-      {{- $terms = $terms | append $slug -}}
-    {{- end -}}
-  {{- end -}}
-
-  {{- $terms = sort (uniq $terms) -}}
+  {{- $terms := partial "taxonomy/build-terms-from-subcategories.html" (dict "subcategories" site.Data.movies.subcategories) -}}
   {{- if eq (len $terms) 0 -}}
     <p>{{ i18n "movies_empty_tag" }}</p>
   {{- else -}}

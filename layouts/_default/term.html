@@ -4,19 +4,7 @@
   {{- $termSlug := urlize $termRaw -}}
   {{- $labelSource := $termRaw | default $termSlug -}}
   {{- $termLabel := partial "books/subcategory-label.html" $labelSource -}}
-  {{- $filteredBooks := slice -}}
-
-  {{- range $allBooks -}}
-    {{- $matches := false -}}
-    {{- range .subcategories -}}
-      {{- if eq (urlize .) $termSlug -}}
-        {{- $matches = true -}}
-      {{- end -}}
-    {{- end -}}
-    {{- if $matches -}}
-      {{- $filteredBooks = $filteredBooks | append . -}}
-    {{- end -}}
-  {{- end -}}
+  {{- $filteredBooks := partial "taxonomy/filter-by-term.html" (dict "items" $allBooks "term" $termRaw) -}}
 
   <p>{{ i18n "books_tag_page_title" }} <strong>{{ $termLabel }}</strong>.</p>
 

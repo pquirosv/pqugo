@@ -1,0 +1,27 @@
+{{- $term := lower (printf "%v" .term) -}}
+{{- $termKey := urlize $term -}}
+{{- $subcategories := .subcategories | default (slice) -}}
+
+{{- $i18nKey := "" -}}
+{{- range $subcategories -}}
+  {{- $subcategory := . -}}
+  {{- $slug := lower (printf "%v" $subcategory.slug) -}}
+  {{- if and (eq $i18nKey "") (eq (urlize $slug) $termKey) -}}
+    {{- $i18nKey = $subcategory.i18n -}}
+  {{- end -}}
+
+  {{- if and (eq $i18nKey "") (reflect.IsSlice $subcategory.aliases) -}}
+    {{- range $subcategory.aliases -}}
+      {{- $alias := lower (printf "%v" .) -}}
+      {{- if and (eq $i18nKey "") (eq (urlize $alias) $termKey) -}}
+        {{- $i18nKey = $subcategory.i18n -}}
+      {{- end -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+
+{{- if ne $i18nKey "" -}}
+  {{- i18n $i18nKey -}}
+{{- else -}}
+  {{- title (replace $term "-" " ") -}}
+{{- end -}}

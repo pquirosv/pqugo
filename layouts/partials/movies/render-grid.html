@@ -24,7 +24,7 @@
       {{- end -}}
       {{- with .cast -}}
         {{- if gt (len .) 0 -}}
-          <p class="movie-cast"><strong>{{ i18n "movies_cast_label" }}: {{ delimit . ", " }}</strong></p>
+          <p class="movie-cast">{{ i18n "movies_cast_label" }}: <strong>{{ delimit . ", " }}</strong></p>
         {{- end -}}
       {{- end -}}
     </article>

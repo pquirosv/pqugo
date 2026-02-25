@@ -1,6 +1,5 @@
 {{- $books := slice -}}
 {{- $allTags := slice -}}
-{{- $showTitle := true -}}
 {{- $renderWhenEmpty := false -}}
 
 {{- if reflect.IsMap . -}}
@@ -9,9 +8,6 @@
   {{- end -}}
   {{- with index . "terms" -}}
     {{- $allTags = . -}}
-  {{- end -}}
-  {{- with index . "showTitle" -}}
-    {{- $showTitle = . -}}
   {{- end -}}
   {{- with index . "renderWhenEmpty" -}}
     {{- $renderWhenEmpty = . -}}
@@ -25,21 +21,10 @@
   {{- $tagsBase = "libros/tags" -}}
 {{- end -}}
 
-{{- if eq (len $allTags) 0 -}}
-  {{- range $books -}}
-    {{- range .subcategories -}}
-      {{- $allTags = $allTags | append . -}}
-    {{- end -}}
-  {{- end -}}
-  {{- $allTags = sort (uniq $allTags) -}}
-{{- end -}}
-
-{{- if or (gt (len $allTags) 0) $renderWhenEmpty -}}
-  <p class="books-tags">
-    {{- range $allTags -}}
-      {{- $term := . -}}
-      {{- $label := partial "books/subcategory-label.html" $term -}}
-      <a class="books-tag" href="{{ relLangURL (printf "%s/%s/" $tagsBase (urlize $term)) }}">#{{ $label }}</a>
-    {{- end -}}
-  </p>
-{{- end -}}
+{{- partial "taxonomy/render-tags.html" (dict
+  "items" $books
+  "terms" $allTags
+  "renderWhenEmpty" $renderWhenEmpty
+  "tagsBase" $tagsBase
+  "labelPartial" "books/subcategory-label.html"
+) -}}

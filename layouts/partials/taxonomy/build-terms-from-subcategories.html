@@ -1,0 +1,10 @@
+{{- $subcategories := .subcategories | default (slice) -}}
+{{- $terms := slice -}}
+{{- range $subcategories -}}
+  {{- $slug := lower (printf "%v" .slug) -}}
+  {{- if ne $slug "" -}}
+    {{- $terms = $terms | append $slug -}}
+  {{- end -}}
+{{- end -}}
+
+{{- return (sort (uniq $terms)) -}}

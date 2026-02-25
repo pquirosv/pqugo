@@ -4,19 +4,7 @@
   {{- $termSlug := urlize $termRaw -}}
   {{- $labelSource := $termRaw | default $termSlug -}}
   {{- $termLabel := partial "movies/subcategory-label.html" $labelSource -}}
-  {{- $filteredMovies := slice -}}
-
-  {{- range $allMovies -}}
-    {{- $matches := false -}}
-    {{- range .subcategories -}}
-      {{- if eq (urlize .) $termSlug -}}
-        {{- $matches = true -}}
-      {{- end -}}
-    {{- end -}}
-    {{- if $matches -}}
-      {{- $filteredMovies = $filteredMovies | append . -}}
-    {{- end -}}
-  {{- end -}}
+  {{- $filteredMovies := partial "taxonomy/filter-by-term.html" (dict "items" $allMovies "term" $termRaw) -}}
 
   <p>{{ i18n "movies_tag_page_title" }} <strong>{{ $termLabel }}</strong>.</p>
 

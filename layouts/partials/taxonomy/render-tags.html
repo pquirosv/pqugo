@@ -1,0 +1,55 @@
+{{- $items := slice -}}
+{{- $allTags := slice -}}
+{{- $renderWhenEmpty := false -}}
+{{- $tagsBase := "" -}}
+{{- $labelPartial := "" -}}
+{{- $fallbackTermsFromData := slice -}}
+
+{{- if reflect.IsMap . -}}
+  {{- with index . "items" -}}
+    {{- $items = . -}}
+  {{- end -}}
+  {{- with index . "terms" -}}
+    {{- $allTags = . -}}
+  {{- end -}}
+  {{- with index . "renderWhenEmpty" -}}
+    {{- $renderWhenEmpty = . -}}
+  {{- end -}}
+  {{- with index . "tagsBase" -}}
+    {{- $tagsBase = . -}}
+  {{- end -}}
+  {{- with index . "labelPartial" -}}
+    {{- $labelPartial = . -}}
+  {{- end -}}
+  {{- with index . "fallbackTermsFromData" -}}
+    {{- $fallbackTermsFromData = . -}}
+  {{- end -}}
+{{- else -}}
+  {{- $items = . | default (slice) -}}
+{{- end -}}
+
+{{- if eq (len $allTags) 0 -}}
+  {{- range $items -}}
+    {{- range .subcategories -}}
+      {{- $allTags = $allTags | append . -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+
+{{- if and (eq (len $allTags) 0) (gt (len $fallbackTermsFromData) 0) -}}
+  {{- range $fallbackTermsFromData -}}
+    {{- $allTags = $allTags | append . -}}
+  {{- end -}}
+{{- end -}}
+
+{{- $allTags = sort (uniq $allTags) -}}
+
+{{- if or (gt (len $allTags) 0) $renderWhenEmpty -}}
+  <p class="books-tags">
+    {{- range $allTags -}}
+      {{- $term := printf "%v" . -}}
+      {{- $label := partial $labelPartial $term -}}
+      <a class="books-tag" href="{{ relLangURL (printf "%s/%s/" $tagsBase (urlize $term)) }}">#{{ $label }}</a>
+    {{- end -}}
+  </p>
+{{- end -}}
