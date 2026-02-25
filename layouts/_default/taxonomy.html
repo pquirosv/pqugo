@@ -1,12 +1,35 @@
 {{ define "main" }}
-  {{- $terms := .Data.Terms.Alphabetical | default (slice) -}}
-  {{- if eq (len $terms) 0 -}}
-    <p>No terms available yet.</p>
+  {{- $taxonomyConfigs := dict
+    "book_tags" (dict
+      "subcategories" (site.Data.books.subcategories | default (slice))
+      "emptyMessageI18nKey" "books_all_with_tab_empty"
+      "renderPartial" "books/render-tags.html"
+    )
+    "movie_tags" (dict
+      "subcategories" (site.Data.movies.subcategories | default (slice))
+      "emptyMessageI18nKey" "movies_all_with_tab_empty"
+      "renderPartial" "movies/render-tags.html"
+    )
+  -}}
+  {{- $taxonomyConfig := index $taxonomyConfigs .Data.Plural -}}
+
+  {{- if $taxonomyConfig -}}
+    {{- $terms := partial "taxonomy/build-terms-from-subcategories.html" (dict "subcategories" (index $taxonomyConfig "subcategories")) -}}
+    {{- if eq (len $terms) 0 -}}
+      <p>{{ i18n (index $taxonomyConfig "emptyMessageI18nKey") }}</p>
+    {{- else -}}
+      {{- partial (index $taxonomyConfig "renderPartial") (dict "terms" $terms "showTitle" false) -}}
+    {{- end -}}
   {{- else -}}
-    <ul>
-      {{- range $terms -}}
-        <li><a href="{{ .Page.RelPermalink }}">{{ .Page.Title }}</a> ({{ .Count }})</li>
-      {{- end -}}
-    </ul>
+    {{- $terms := .Data.Terms.Alphabetical | default (slice) -}}
+    {{- if eq (len $terms) 0 -}}
+      <p>No terms available yet.</p>
+    {{- else -}}
+      <ul>
+        {{- range $terms -}}
+          <li><a href="{{ .Page.RelPermalink }}">{{ .Page.Title }}</a> ({{ .Count }})</li>
+        {{- end -}}
+      </ul>
+    {{- end -}}
   {{- end -}}
 {{ end }}

@@ -1,7 +1,8 @@
 {{- $movies := . | default (slice) -}}
+{{- $sortedMovies := sort $movies "year" "desc" -}}
 
 <div class="movies-grid">
-  {{- range $movies -}}
+  {{- range $sortedMovies -}}
     {{- $title := .title | default "" -}}
     {{- $author := .author | default .director | default "" -}}
     {{- $image := .image | default "" -}}

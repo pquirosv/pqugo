@@ -1,8 +1,0 @@
-{{ define "main" }}
-  {{- $terms := partial "taxonomy/build-terms-from-subcategories.html" (dict "subcategories" site.Data.movies.subcategories) -}}
-  {{- if eq (len $terms) 0 -}}
-    <p>{{ i18n "movies_all_with_tab_empty" }}</p>
-  {{- else -}}
-    {{- partial "movies/render-tags.html" (dict "terms" $terms "renderWhenEmpty" true) -}}
-  {{- end -}}
-{{ end }}
