@@ -141,7 +141,7 @@ footer {
 .section-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 24px;
+    gap: 2em;
 }
 
 
@@ -150,6 +150,21 @@ footer {
 .cv-enum p {
     margin: 6px 0;
 }
+
+.image-cv {
+    display: block;
+    border-radius: 35%;
+    width: 35%;
+    margin: 0 2em;
+    float: right;
+}
+
+.cv-list {
+    display: block;
+    margin: auto 0;
+}
+
+
 /* Musica */
 
 .song-list li {
@@ -255,6 +270,23 @@ audio {
 }
 
 /* Responsive adjustments */
+
+/* If the device is in portrait mode but is wider than 500px, the image-cv must be shown, but not aligned to the right, but in the center */
+@media (orientation: portrait) {
+    .section-grid {
+        gap: 0.5em;
+    }
+    
+    .image-cv {
+        display: block;
+        margin: 0 auto 1em;
+        float: none;
+        width: 60%;
+    }
+    .cv-list {
+        display: block;
+    }
+}
 
 @media (orientation: portrait) and (max-width: 500px) {
     .language-switcher {
