@@ -151,6 +151,11 @@ footer {
     margin: 6px 0;
 }
 
+.image-cv-parent {
+    display: block; 
+    margin: auto;
+}
+
 .image-cv {
     display: block;
     border-radius: 35%;
@@ -271,15 +276,13 @@ audio {
 
 /* Responsive adjustments */
 
-/* If the device is in portrait mode but is wider than 500px, the image-cv must be shown, but not aligned to the right, but in the center */
 @media (orientation: portrait) {
     .section-grid {
         gap: 0.5em;
     }
-    
     .image-cv {
         display: block;
-        margin: 0 auto 1em;
+        margin: 0.5em auto 1em;
         float: none;
         width: 60%;
     }
@@ -294,15 +297,25 @@ audio {
     }
 }
 
-@media (max-width: 770px){
-    .section-grid{
+@media (max-width: 670px){
+    .section-grid:not(.cv-grid) {
         grid-template-columns: 1fr;
     }
+    .image-cv {
+        width: 50%;
+    }
+    
     .movies-grid {
         grid-template-columns: repeat(auto-fill, minmax(132px, 1fr));
         gap: 12px;
     }
     :root {
         --w: 95%;
+    }
+}
+
+@media (orientation: landscape) and (max-width: 1100px) {
+    .image-cv {
+        width: 50%;
     }
 }
