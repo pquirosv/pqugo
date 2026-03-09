@@ -314,7 +314,7 @@ audio {
         gap: 0.5em;
         grid-template-columns: 1fr;
     }   
-    .cv-grid {
+    .cv-grid .books-grid {
         grid-template-columns: 1fr 1fr;
     }
     .image-cv {

@@ -26,7 +26,7 @@
     {{- $yearBooks := where $datedBooks "year" $year -}}
     {{- if gt (len $yearBooks) 0 -}}
       <h2 class="books-year">{{ $year }}</h2>
-      <div class="section-grid">
+      <div class="section-grid books-grid">
         <div class="section-left">
           {{ partial "books/render-categories.html" (dict "books" $yearBooks "categories" (slice "N" "T")) }}
         </div>
