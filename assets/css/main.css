@@ -281,10 +281,17 @@ audio {
     :root {
         --w: 95%;
     }
+
     .section-grid {
-        gap: 0.5em;
+        gap: 0;
         grid-template-columns: 1fr;
     }
+
+    .section-grid .section-left > :last-child {
+        margin-bottom: 0;
+        padding-bottom: 0;
+    }
+
     .image-cv {
         display: block;
         margin: 0.5em auto 1em;
