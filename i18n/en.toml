@@ -4,6 +4,9 @@ other = "Pablo's page"
 [menu_cv]
 other = "CV"
 
+[menu_journal]
+other = "Journal"
+
 [menu_music]
 other = "Music"
 
@@ -15,6 +18,21 @@ other = "Movies"
 
 [menu_github]
 other = "GitHub"
+
+[journal_recent_entries]
+other = "Recent entries"
+
+[journal_archive_link]
+other = "View full archive"
+
+[journal_archive_title]
+other = "Archive"
+
+[journal_read_more]
+other = "Continue reading"
+
+[journal_empty]
+other = "There are no published entries yet."
 
 [books_category_narrative]
 other = "Narrative"

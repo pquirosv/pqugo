@@ -52,8 +52,9 @@ header {
 .header-links {
     text-align: left;
     display: flex;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
     align-items: center;
+    gap: 0.75rem;
     font-size: 18px;
 }
 
@@ -73,11 +74,16 @@ header {
 }
 
 .links-group > * {
-    margin: 0.2em;
+    margin: 0;
 }
 
 .links-group {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: clamp(0.35rem, 1.5vw, 0.55rem);
+    min-width: 0;
     opacity: 0.85;
+    white-space: nowrap;
 }
 
 .links-group:hover {
@@ -275,6 +281,91 @@ audio {
     line-height: 1.35;
 }
 
+/* Bitacora */
+
+.journal-intro {
+    margin-bottom: 1.75rem;
+}
+
+.journal-section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.journal-section-header h2 {
+    margin: 0;
+}
+
+.journal-list {
+    display: grid;
+    gap: 1.25rem;
+}
+
+.journal-entry-preview,
+.journal-entry {
+    padding-bottom: 1.25rem;
+    border-bottom: 1px solid var(--color-hr);
+}
+
+.journal-entry-preview:last-child {
+    border-bottom: 0;
+    padding-bottom: 0;
+}
+
+.journal-entry-header {
+    margin-bottom: 0.5rem;
+}
+
+.journal-entry-title {
+    margin-bottom: 0.2rem;
+}
+
+.journal-entry-title a {
+    color: var(--color-text);
+}
+
+.journal-entry-meta {
+    margin: 0;
+    color: var(--color-muted);
+    font-size: 0.9rem;
+}
+
+.journal-entry-summary,
+.journal-entry-content > :first-child {
+    margin-top: 0;
+}
+
+.journal-entry-cta {
+    margin-bottom: 0;
+}
+
+.journal-archive-list {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+}
+
+.journal-archive-item {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.8rem;
+    align-items: baseline;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid var(--color-hr);
+}
+
+.journal-archive-item:last-child {
+    border-bottom: 0;
+}
+
+.journal-archive-link,
+.journal-read-more {
+    white-space: nowrap;
+}
+
 /* Responsive adjustments */
 
 @media (orientation: portrait) {
@@ -301,9 +392,33 @@ audio {
     .cv-list {
         display: block;
     }
+
+    .journal-section-header,
+    .journal-archive-item {
+        display: block;
+    }
+
+    .journal-archive-item .journal-entry-meta {
+        display: block;
+        margin-bottom: 0.15rem;
+    }
+
     @media (max-width: 550px) {
+        :root {
+            font-size: 18px;
+        
+        }
         .language-switcher {
             display: none;
+        }
+
+        .header-links {
+            justify-content: center;
+            font-size: clamp(13px, 4vw, 16px);
+        }
+
+        .links-group {
+            gap: clamp(0.6rem, 1.2vw, 0.9rem);
         }
     }
     @media (min-width: 700px) {

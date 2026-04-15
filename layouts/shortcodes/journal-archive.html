@@ -1,0 +1,14 @@
+{{- $entries := partial "journal/get-entries.html" .Page -}}
+
+{{ if gt (len $entries) 0 }}
+  <ul class="journal-archive-list">
+    {{ range $entries }}
+      <li class="journal-archive-item">
+        <span class="journal-entry-meta">{{ .Date.Format "02/01/2006" }}</span>
+        <a href="{{ .RelPermalink }}">{{ .Title }}</a>
+      </li>
+    {{ end }}
+  </ul>
+{{ else }}
+  <p>{{ i18n "journal_empty" }}</p>
+{{ end }}

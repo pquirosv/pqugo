@@ -4,6 +4,9 @@ other = "La página de Pablo"
 [menu_cv]
 other = "CV"
 
+[menu_journal]
+other = "Bitácora"
+
 [menu_music]
 other = "Música"
 
@@ -15,6 +18,21 @@ other = "Películas"
 
 [menu_github]
 other = "GitHub"
+
+[journal_recent_entries]
+other = "Entradas recientes"
+
+[journal_archive_link]
+other = "Ver archivo completo"
+
+[journal_archive_title]
+other = "Archivo"
+
+[journal_read_more]
+other = "Seguir leyendo"
+
+[journal_empty]
+other = "Todavía no hay entradas publicadas."
 
 [books_category_narrative]
 other = "Narrativa"
@@ -156,4 +174,3 @@ other = "Western"
 
 [movies_subcategory_horror]
 other = "Terror"
-

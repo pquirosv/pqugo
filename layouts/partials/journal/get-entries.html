@@ -1,0 +1,21 @@
+{{- $ctx := . -}}
+{{- $site := $ctx.Site -}}
+
+{{- if eq $ctx.Site.Language.Lang "en" -}}
+  {{- range $ctx.Sites -}}
+    {{- if eq .Language.Lang "es" -}}
+      {{- $site = . -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+
+{{- $entries := slice -}}
+
+{{- $pages := where $site.RegularPages "Section" "journal_entries" -}}
+{{- range $pages.ByDate.Reverse -}}
+  {{- if and .File (ne .File.ContentBaseName "archive") -}}
+    {{- $entries = $entries | append . -}}
+  {{- end -}}
+{{- end -}}
+
+{{- return $entries -}}

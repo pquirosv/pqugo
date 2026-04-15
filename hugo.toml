@@ -13,6 +13,8 @@ defaultContentLanguageInSubdir = false
     languageCode = 'es'
     weight = 1
     contentDir = 'content/es'
+    [languages.es.permalinks]
+      journal_entries = '/bitacora/:slugorfilename/'
     [languages.es.permalinks.taxonomy]
       book_tags = '/libros/tags/'
       movie_tags = '/peliculas/tags/'
@@ -24,6 +26,8 @@ defaultContentLanguageInSubdir = false
     languageCode = 'en'
     weight = 2
     contentDir = 'content/en'
+    [languages.en.permalinks]
+      journal_entries = '/journal/:slugorfilename/'
     [languages.en.permalinks.taxonomy]
       book_tags = '/books/tags/'
       movie_tags = '/movies/tags/'

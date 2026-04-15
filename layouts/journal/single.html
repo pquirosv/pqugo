@@ -1,0 +1,11 @@
+{{ define "main" }}
+  <article class="journal-entry">
+    <header class="journal-entry-header">
+      <p class="journal-entry-meta">{{ .Date.Format "02/01/2006" }}</p>
+    </header>
+
+    <div class="journal-entry-content">
+      {{ .Content }}
+    </div>
+  </article>
+{{ end }}

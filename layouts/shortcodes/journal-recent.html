@@ -1,0 +1,21 @@
+{{- $entries := partial "journal/get-entries.html" .Page -}}
+{{- $archivePage := .Page.Site.GetPage "journal_entries/archive" -}}
+
+<section class="journal-section">
+  <div class="journal-section-header">
+    <h2>{{ i18n "journal_recent_entries" }}</h2>
+    {{- with $archivePage }}
+      <a class="journal-archive-link" href="{{ .RelPermalink }}">{{ i18n "journal_archive_link" }}</a>
+    {{- end }}
+  </div>
+
+  {{ if gt (len $entries) 0 }}
+    <div class="journal-list">
+      {{ range first 5 $entries }}
+        {{ partial "journal/render-entry-preview.html" (dict "page" . "showSummary" true) }}
+      {{ end }}
+    </div>
+  {{ else }}
+    <p>{{ i18n "journal_empty" }}</p>
+  {{ end }}
+</section>

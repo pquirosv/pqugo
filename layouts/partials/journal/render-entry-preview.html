@@ -1,0 +1,17 @@
+{{- $page := .page -}}
+{{- $showSummary := .showSummary | default false -}}
+{{- $summary := $page.Params.summary | default ($page.Plain | truncate 220) -}}
+
+<article class="journal-entry-preview">
+  <header class="journal-entry-header">
+    <h2 class="journal-entry-title"><a href="{{ $page.RelPermalink }}">{{ $page.Title }}</a></h2>
+    <p class="journal-entry-meta">{{ $page.Date.Format "02/01/2006" }}</p>
+  </header>
+
+  {{- if $showSummary -}}
+    <p class="journal-entry-summary">{{ $summary }}</p>
+    <p class="journal-entry-cta">
+      <a class="journal-read-more" href="{{ $page.RelPermalink }}">{{ i18n "journal_read_more" }}</a>
+    </p>
+  {{- end -}}
+</article>
