@@ -287,27 +287,14 @@ audio {
     margin-bottom: 1.75rem;
 }
 
-.journal-section-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: baseline;
-    gap: 1rem;
-    margin-bottom: 1rem;
-}
-
-.journal-section-header h2 {
-    margin: 0;
-}
-
 .journal-list {
     display: grid;
     gap: 1.25rem;
 }
 
-.journal-entry-preview,
-.journal-entry {
+.journal-entry-preview {
     padding-bottom: 1.25rem;
-    border-bottom: 1px solid var(--color-hr);
+    border-bottom: 2px solid var(--color-hr);
 }
 
 .journal-entry-preview:last-child {
@@ -319,12 +306,13 @@ audio {
     margin-bottom: 0.5rem;
 }
 
-.journal-entry-title {
+.journal-entry-title a{
     margin-bottom: 0.2rem;
+    color: var(--color-text);
 }
 
-.journal-entry-title a {
-    color: var(--color-text);
+.journal-entry-title a:hover {
+    color: var(--color-muted);
 }
 
 .journal-entry-meta {
@@ -333,7 +321,23 @@ audio {
     font-size: 0.9rem;
 }
 
+.journal-entry-summary {
+    text-align: center;
+    font-style: italic;
+}
+
+.journal-entry-excerpt {
+    display: -webkit-box;
+    overflow: hidden;
+    line-height: 1.6;
+    text-align: center;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 5;
+    padding-inline: 0.5em;
+}
+
 .journal-entry-summary,
+.journal-entry-excerpt,
 .journal-entry-content > :first-child {
     margin-top: 0;
 }
@@ -342,27 +346,22 @@ audio {
     margin-bottom: 0;
 }
 
+.journal-entry-divider {
+    border: 0.5px solid var(--color-hr);
+    margin: 1.25rem 0;
+}
+
 .journal-archive-list {
     list-style: none;
     padding-left: 0;
     margin: 0;
 }
 
-.journal-archive-item {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.8rem;
-    align-items: baseline;
-    padding: 0.5rem 0;
-    border-bottom: 1px solid var(--color-hr);
+.journal-archive-section {
+    text-align: right;
 }
 
-.journal-archive-item:last-child {
-    border-bottom: 0;
-}
-
-.journal-archive-link,
-.journal-read-more {
+.journal-archive-link {
     white-space: nowrap;
 }
 
@@ -391,16 +390,6 @@ audio {
     }
     .cv-list {
         display: block;
-    }
-
-    .journal-section-header,
-    .journal-archive-item {
-        display: block;
-    }
-
-    .journal-archive-item .journal-entry-meta {
-        display: block;
-        margin-bottom: 0.15rem;
     }
 
     @media (max-width: 550px) {

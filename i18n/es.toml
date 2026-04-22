@@ -19,17 +19,11 @@ other = "Películas"
 [menu_github]
 other = "GitHub"
 
-[journal_recent_entries]
-other = "Entradas recientes"
-
 [journal_archive_link]
 other = "Ver archivo completo"
 
 [journal_archive_title]
 other = "Archivo"
-
-[journal_read_more]
-other = "Seguir leyendo"
 
 [journal_empty]
 other = "Todavía no hay entradas publicadas."
@@ -45,6 +39,9 @@ other = "Poesía"
 
 [books_category_theatre]
 other = "Teatro"
+
+[books_subcategory_religion]
+other = "Religión"
 
 [books_all_tags_title]
 other = "Filtrar por categoría"

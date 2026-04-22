@@ -19,17 +19,11 @@ other = "Movies"
 [menu_github]
 other = "GitHub"
 
-[journal_recent_entries]
-other = "Recent entries"
-
 [journal_archive_link]
 other = "View full archive"
 
 [journal_archive_title]
 other = "Archive"
-
-[journal_read_more]
-other = "Continue reading"
 
 [journal_empty]
 other = "There are no published entries yet."
@@ -111,6 +105,9 @@ other = "Culture"
 
 [books_category_theatre]
 other = "Theatre"
+
+[books_subcategory_religion]
+other = "Religion"
 
 [books_all_with_tab_empty]
 other = "No books with tags are available yet."
