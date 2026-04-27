@@ -6,7 +6,7 @@
   {{ if gt (len $entries) 0 }}
   <div class="journal-list">
     {{ range first 5 $entries }}
-    {{ partial "journal/render-entry-preview.html" (dict "page" . "showExcerpt" true) }}
+    {{ partial "journal/render-entry-preview.html" (dict "page" .) }}
     {{ end }}
   </div>
   {{ else }}

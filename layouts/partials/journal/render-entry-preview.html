@@ -1,5 +1,9 @@
 {{- $page := .page -}}
-{{- $showExcerpt := .showExcerpt | default false -}}
+{{- $image := "" -}}
+{{- with findRE `!\[[^\]]*]\(([^)]+)\)` $page.RawContent 1 -}}
+  {{- $image = replaceRE `!\[[^\]]*]\(([^)]+)\)` `$1` (index . 0) -}}
+{{- end -}}
+{{- $excerpt := $page.RawContent | replaceRE `!\[[^\]]*]\(([^)]+)\)` "" | plainify -}}
 
 <article class="journal-entry-preview">
   <header class="journal-entry-header">
@@ -7,11 +11,15 @@
     <p class="journal-entry-meta">{{ $page.Date.Format "02/01/2006" }}</p>
   </header>
 
-  {{- if $showExcerpt -}}
-    {{- with $page.Params.summary }}
-      <p class="journal-entry-summary">{{ . }}</p>
+  {{- with $page.Params.summary }}
+    <p class="journal-entry-summary">{{ . }}</p>
+  {{- end }}
+  <div class="journal-entry-preview-content{{ if $image }} journal-entry-preview-content--with-image{{ end }}">
+    {{- with $image }}
+      <div class="journal-entry-media">
+        <img class="journal-entry-image" src="{{ . }}" alt="">
+      </div>
     {{- end }}
-    <p class="journal-entry-excerpt">{{ $page.Plain }}</p>
- 
-  {{- end -}}
+    <p class="journal-entry-excerpt">{{ $excerpt }}</p>
+  </div>
 </article>
