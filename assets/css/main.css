@@ -453,7 +453,7 @@ audio {
 @media (orientation: portrait) {
     :root {
         --w: 95%;
-        --pad: 0.5em;
+        --pad: 0.4em;
     }
 
     .home-grid {
@@ -509,11 +509,11 @@ audio {
 
         .header-links {
             justify-content: center;
-            font-size: clamp(12px, 4.5vw, 18px) !important;
+            font-size: clamp(15px, 4.2vw, 18px);
         }
 
         .links-group {
-            gap: clamp(0.6rem, 1.2vw, 0.9rem);
+            gap: clamp(0.6rem, 1.1vw, 0.9rem);
         }
     }
     @media (min-width: 700px) {
