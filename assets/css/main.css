@@ -1,8 +1,8 @@
 /** GENERAL STYLES */
 
 :root {
-    --w: 85%;
-    --pad: 0.75em;
+    --w: 1050px;
+    --pad: 0.8em;
     --color-text: #ffffff;
     --color-muted: #b8b3c7;
     --color-bg: #1e0f33;
