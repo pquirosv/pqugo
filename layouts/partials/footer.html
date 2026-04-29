@@ -1,5 +1,5 @@
 <hr>
 <div class="footer-links">
   <div>Hugo Theme: <a href="https://github.com/pquirosv/pqugo">github.com/pquirosv/pqugo</a></div>
-  <div><a href="{{ "/" | relURL }}">pabloquiros.click</a></div>
+  <div><a href="{{ "/" | relURL }}">{{ site.BaseURL | strings.TrimPrefix "https://" | strings.TrimPrefix "http://" | strings.TrimSuffix "/" }}</a></div>
 </div>
