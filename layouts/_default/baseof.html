@@ -20,7 +20,7 @@
       <header>
         {{ partial "menu.html" . }}
       </header>
-      {{ if not .IsHome }}
+      {{ if and (not .IsHome) (ne .Kind "404") }}
         <h1 class="title">
           {{- $pageTitle -}}
         </h1>
