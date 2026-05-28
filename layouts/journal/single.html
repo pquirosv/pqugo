@@ -1,4 +1,24 @@
 {{ define "main" }}
+  {{- $entries := partial "journal/get-entries.html" . -}}
+  {{- $nav := newScratch -}}
+  {{- $nav.Set "currentIndex" -1 -}}
+  {{- range $index, $entry := $entries -}}
+    {{- if eq $entry.RelPermalink $.RelPermalink -}}
+      {{- $nav.Set "currentIndex" $index -}}
+    {{- end -}}
+  {{- end -}}
+  {{- $currentIndex := $nav.Get "currentIndex" -}}
+  {{- $previous := "" -}}
+  {{- $next := "" -}}
+  {{- if ge $currentIndex 0 -}}
+    {{- if lt (add $currentIndex 1) (len $entries) -}}
+      {{- $previous = index $entries (add $currentIndex 1) -}}
+    {{- end -}}
+    {{- if gt $currentIndex 0 -}}
+      {{- $next = index $entries (sub $currentIndex 1) -}}
+    {{- end -}}
+  {{- end -}}
+
   <article class="journal-entry">
     <header class="journal-entry-header">
       <p class="journal-entry-meta">{{ .Date.Format "02/01/2006" }}</p>
@@ -7,5 +27,16 @@
     <div class="journal-entry-content">
       {{ .Content }}
     </div>
+
+    {{- if or $previous $next }}
+      <nav class="journal-entry-nav" aria-label="Journal entry navigation">
+        {{- with $previous }}
+          <a class="journal-entry-nav-link journal-entry-nav-link--previous" href="{{ .RelPermalink }}">{{ i18n "journal_previous" }}</a>
+        {{- end }}
+        {{- with $next }}
+          <a class="journal-entry-nav-link journal-entry-nav-link--next" href="{{ .RelPermalink }}">{{ i18n "journal_next" }}</a>
+        {{- end }}
+      </nav>
+    {{- end }}
   </article>
 {{ end }}

@@ -444,6 +444,17 @@ audio {
     padding: 0.5em 2em;
 }
 
+.journal-entry-nav {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 2rem;
+}
+
+.journal-entry-nav-link--next {
+    margin-left: auto;
+}
+
 .journal-entry-cta {
     margin-bottom: 0;
 }

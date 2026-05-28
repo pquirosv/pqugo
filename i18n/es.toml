@@ -28,6 +28,12 @@ other = "Archivo"
 [journal_empty]
 other = "Todavía no hay entradas publicadas."
 
+[journal_previous]
+other = "Anterior"
+
+[journal_next]
+other = "Siguiente"
+
 [books_category_narrative]
 other = "Narrativa"
 
