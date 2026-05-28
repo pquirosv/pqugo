@@ -1,0 +1,42 @@
+{{- $entries := slice -}}
+{{- $allTags := slice -}}
+{{- $renderWhenEmpty := false -}}
+
+{{- if reflect.IsMap . -}}
+  {{- with index . "entries" -}}
+    {{- $entries = . -}}
+  {{- end -}}
+  {{- with index . "terms" -}}
+    {{- $allTags = . -}}
+  {{- end -}}
+  {{- with index . "renderWhenEmpty" -}}
+    {{- $renderWhenEmpty = . -}}
+  {{- end -}}
+{{- else -}}
+  {{- $entries = . | default (slice) -}}
+{{- end -}}
+
+{{- if eq (len $allTags) 0 -}}
+  {{- range $entries -}}
+    {{- range (.Params.tags | default (slice)) -}}
+      {{- $allTags = $allTags | append . -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+
+{{- $allTags = sort (uniq $allTags) -}}
+
+{{- $tagsBase := "journal/tags" -}}
+{{- if eq site.Language.Lang "es" -}}
+  {{- $tagsBase = "bitacora/tags" -}}
+{{- end -}}
+
+{{- if or (gt (len $allTags) 0) $renderWhenEmpty -}}
+  <p class="books-tags">
+    {{- range $allTags -}}
+      {{- $term := printf "%v" . -}}
+      {{- $label := partial "journal/tag-label.html" $term -}}
+      <a class="books-tag" href="{{ relLangURL (printf "%s/%s/" $tagsBase (urlize $term)) }}">#{{ $label }}</a>
+    {{- end -}}
+  </p>
+{{- end -}}

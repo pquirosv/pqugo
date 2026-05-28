@@ -1,5 +1,15 @@
 {{- $entries := partial "journal/get-entries.html" .Page -}}
 {{- $archivePage := .Page.Site.GetPage "journal_entries/archive" -}}
+{{- $taggedEntries := slice -}}
+{{- range $entries -}}
+  {{- $entry := . -}}
+  {{- with $entry.Params.tags -}}
+    {{- if gt (len .) 0 -}}
+      {{- $taggedEntries = $taggedEntries | append $entry -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+{{- $hasTaggedEntries := gt (len $taggedEntries) 0 -}}
 
 <section class="journal-section">
 
@@ -18,4 +28,9 @@
     <a class="journal-archive-link" href="{{ .RelPermalink }}">{{ i18n "journal_archive_link" }}</a>
     {{- end }}
   </div>
+
+  {{- if $hasTaggedEntries -}}
+    <h4 class="filter-books">{{ i18n "journal_all_tags_title" }}</h4>
+    {{ partial "journal/render-tags.html" $taggedEntries }}
+  {{- end -}}
 </section>

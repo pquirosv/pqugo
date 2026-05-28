@@ -2,11 +2,13 @@
 {{- $plural := printf "%v" ($ctx.Data.Plural | default "") -}}
 
 {{- $termLabelPartials := dict
+  "tags" "journal/tag-label.html"
   "book_tags" "books/subcategory-label.html"
   "movie_tags" "movies/subcategory-label.html"
 -}}
 
 {{- $taxonomyMenuKeys := dict
+  "tags" "menu_journal"
   "book_tags" "menu_books"
   "movie_tags" "menu_movies"
 -}}

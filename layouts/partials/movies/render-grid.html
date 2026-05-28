@@ -11,7 +11,7 @@
         {{- if ne $image "" -}}
           <img
             class="movie-poster"
-            src="{{ relURL (printf "movies/photos/%s" $image) }}"
+            src="{{ relURL (printf "photos/movies/%s" $image) }}"
             alt="{{ $title }}"
             loading="lazy"
           />

@@ -28,6 +28,18 @@ other = "Archive"
 [journal_empty]
 other = "There are no published entries yet."
 
+[journal_all_tags_title]
+other = "Filter by tag"
+
+[journal_tag_page_title]
+other = "Entries tagged with"
+
+[journal_empty_tag]
+other = "There are no entries for this tag yet."
+
+[journal_all_with_tag_empty]
+other = "No entries with tags are available yet."
+
 [books_category_narrative]
 other = "Narrative"
 
