@@ -3,7 +3,8 @@
 {{- with findRE `!\[[^\]]*]\(([^)]+)\)` $page.RawContent 1 -}}
   {{- $image = replaceRE `!\[[^\]]*]\(([^)]+)\)` `$1` (index . 0) -}}
 {{- end -}}
-{{- $excerpt := $page.RawContent | replaceRE `!\[[^\]]*]\(([^)]+)\)` "" | plainify -}}
+{{- $excerpt := $page.RawContent | replaceRE `!\[[^\]]*]\(([^)]+)\)` "" -}}
+{{- $excerpt = $page.RenderString $excerpt -}}
 
 <article class="journal-entry-preview">
   <header class="journal-entry-header">
@@ -20,6 +21,6 @@
         <img class="journal-entry-image" src="{{ . }}" alt="">
       </div>
     {{- end }}
-    <p class="journal-entry-excerpt">{{ $excerpt }}</p>
+    <div class="journal-entry-excerpt">{{ $excerpt }}</div>
   </div>
 </article>

@@ -351,6 +351,8 @@ audio {
 }
 
 .journal-entry-preview {
+    max-width: 100%;
+    overflow-x: hidden;
     padding-bottom: 1.25rem;
     border-bottom: 2px solid var(--color-hr);
 }
@@ -370,11 +372,14 @@ audio {
     flex: 0 0 30%;
     display: flex;
     justify-content: center;
+    min-width: 0;
+    max-width: 100%;
 }
 
 .journal-entry-image {
     display: block;
     width: 100%;
+    max-width: 100%;
     aspect-ratio: 4 / 3;
     object-fit: cover;
     border-radius: 12px;
@@ -420,6 +425,14 @@ audio {
 .journal-entry-excerpt,
 .journal-entry-content > :first-child {
     margin-top: 0;
+}
+
+.journal-entry-excerpt > :first-child {
+    margin-top: 0;
+}
+
+.journal-entry-excerpt > :last-child {
+    margin-bottom: 0;
 }
 
 .journal-entry-content img,
@@ -518,7 +531,18 @@ audio {
     }
 
     .journal-entry-media {
+        display: block;
+        width: min(100%, 22rem, calc(100vw - 0.8em));
+        max-width: 100%;
+        margin-right: auto;
         margin-bottom: 0.75rem;
+        margin-left: auto;
+    }
+
+    .journal-entry-image {
+        width: 100%;
+        max-width: 100%;
+        height: auto;
     }
 
     .journal-entry-content pre code {
