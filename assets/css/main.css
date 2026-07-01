@@ -101,6 +101,15 @@ a:hover {
     text-decoration: underline;
 }
 
+p > img:only-child,
+p > a:only-child > img:only-child {
+    display: block;
+    max-width: 100%;
+    height: auto;
+    margin-right: auto;
+    margin-left: auto;
+}
+
 h1 {
     font-size: 30px;
 }
@@ -254,6 +263,85 @@ footer {
 
 audio {
     padding-top: 10px;
+}
+
+.fartones-playlist {
+    margin-top: 1.5rem;
+}
+
+.fartones-cover {
+    position: relative;
+    width: min(100%, 640px);
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.fartones-cover img {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+.fartones-playlist__button {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 4rem;
+    height: 4rem;
+    padding: 0;
+    border: 1px solid var(--color-muted);
+    border-radius: 50%;
+    color: var(--color-text);
+    background: rgba(255, 255, 255, 0.08);
+    cursor: pointer;
+    transform: translate(-50%, -50%);
+}
+
+.fartones-playlist__button:hover {
+    border-color: var(--color-text);
+    background: rgba(255, 255, 255, 0.12);
+}
+
+.fartones-playlist__button::before {
+    content: "";
+    width: 0;
+    height: 0;
+    margin-left: 0.1rem;
+    border-top: 0.75rem solid transparent;
+    border-bottom: 0.75rem solid transparent;
+    border-left: 1.1rem solid currentColor;
+}
+
+.fartones-playlist__button[aria-pressed="true"]::before {
+    width: 0.7rem;
+    height: 1.3rem;
+    margin-left: 0;
+    border-top: 0;
+    border-bottom: 0;
+    border-right: 0.18rem solid currentColor;
+    border-left: 0.18rem solid currentColor;
+}
+
+.fartones-playlist__tracks {
+    padding-left: 1.4rem;
+}
+
+.fartones-playlist__track {
+    margin-bottom: 1rem;
+}
+
+.fartones-playlist__title {
+    display: block;
+    margin-bottom: 0.15rem;
+    font-weight: bold;
+}
+
+.fartones-playlist audio {
+    display: block;
+    width: 100%;
 }
 
 /* Libros */

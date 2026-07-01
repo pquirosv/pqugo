@@ -1,0 +1,182 @@
+<div class="fartones-playlist" data-fartones-playlist>
+  <div class="fartones-cover">
+    <img src="/photos/fartones.jpeg" alt="FarTones - Una noche en el Museum">
+    <button class="fartones-playlist__button" type="button" data-play-all aria-label="Reproducir concierto completo" aria-pressed="false"></button>
+  </div>
+
+  <ol class="fartones-playlist__tracks">
+    <li class="fartones-playlist__track">
+      <span class="fartones-playlist__title">Jumping Jack Flash</span>
+      <audio controls preload="none" src="/songs/fartones/1.JumpingJackFlash.mp3"></audio>
+    </li>
+    <li class="fartones-playlist__track">
+      <span class="fartones-playlist__title">All Day and All of the Night</span>
+      <audio controls preload="none" src="/songs/fartones/2.AllTheDayAndAllOfTheNight.mp3"></audio>
+    </li>
+    <li class="fartones-playlist__track">
+      <span class="fartones-playlist__title">Something Else</span>
+      <audio controls preload="none" src="/songs/fartones/3.SomethingElse.mp3"></audio>
+    </li>
+    <li class="fartones-playlist__track">
+      <span class="fartones-playlist__title">Stupidity</span>
+      <audio controls preload="none" src="/songs/fartones/4.Stupidity.mp3"></audio>
+    </li>
+    <li class="fartones-playlist__track">
+      <span class="fartones-playlist__title">Cocaine</span>
+      <audio controls preload="none" src="/songs/fartones/5.Cocaine.mp3"></audio>
+    </li>
+    <li class="fartones-playlist__track">
+      <span class="fartones-playlist__title">Cadillac Solitario</span>
+      <audio controls preload="none" src="/songs/fartones/6.CadillacSolitario.mp3"></audio>
+    </li>
+    <li class="fartones-playlist__track">
+      <span class="fartones-playlist__title">Suspicious Minds</span>
+      <audio controls preload="none" src="/songs/fartones/7.SuspiciousMinds.mp3"></audio>
+    </li>
+    <li class="fartones-playlist__track">
+      <span class="fartones-playlist__title">What I Like About You</span>
+      <audio controls preload="none" src="/songs/fartones/8.WhatILikeAboutYou.mp3"></audio>
+    </li>
+    <li class="fartones-playlist__track">
+      <span class="fartones-playlist__title">Believer</span>
+      <audio controls preload="none" src="/songs/fartones/9.Believer.mp3"></audio>
+    </li>
+    <li class="fartones-playlist__track">
+      <span class="fartones-playlist__title">King of the Road</span>
+      <audio controls preload="none" src="/songs/fartones/10.KingOfTheRoad.mp3"></audio>
+    </li>
+    <li class="fartones-playlist__track">
+      <span class="fartones-playlist__title">Substitute</span>
+      <audio controls preload="none" src="/songs/fartones/11.Substitute.mp3"></audio>
+    </li>
+    <li class="fartones-playlist__track">
+      <span class="fartones-playlist__title">Roll Over Beethoven</span>
+      <audio controls preload="none" src="/songs/fartones/12.RollOverBeethoven.mp3"></audio>
+    </li>
+    <li class="fartones-playlist__track">
+      <span class="fartones-playlist__title">Day Tripper</span>
+      <audio controls preload="none" src="/songs/fartones/13.DayTripper.mp3"></audio>
+    </li>
+    <li class="fartones-playlist__track">
+      <span class="fartones-playlist__title">Route 66</span>
+      <audio controls preload="none" src="/songs/fartones/14.Route66.mp3"></audio>
+    </li>
+    <li class="fartones-playlist__track">
+      <span class="fartones-playlist__title">Rock and Roll Radio</span>
+      <audio controls preload="none" src="/songs/fartones/15.RockRollRadio.mp3"></audio>
+    </li>
+    <li class="fartones-playlist__track">
+      <span class="fartones-playlist__title">Ritmo del garaje</span>
+      <audio controls preload="none" src="/songs/fartones/16.RitmoDelGaraje.mp3"></audio>
+    </li>
+    <li class="fartones-playlist__track">
+      <span class="fartones-playlist__title">Cocodrilo</span>
+      <audio controls preload="none" src="/songs/fartones/17.Cocodrilo.mp3"></audio>
+    </li>
+  </ol>
+</div>
+
+<script>
+(() => {
+    const playlist = document.querySelector("[data-fartones-playlist]");
+
+    if (!playlist) {
+        return;
+    }
+
+    const button = playlist.querySelector("[data-play-all]");
+    const audios = Array.from(playlist.querySelectorAll("audio"));
+    let currentIndex = 0;
+    let playlistMode = false;
+
+    const stopOtherTracks = (activeAudio) => {
+        audios.forEach((audio) => {
+            if (audio !== activeAudio) {
+                audio.pause();
+            }
+        });
+    };
+
+    const setButtonPlaying = (isPlaying) => {
+        button.setAttribute("aria-pressed", isPlaying ? "true" : "false");
+        button.setAttribute("aria-label", isPlaying ? "Pausar concierto completo" : "Reproducir concierto completo");
+    };
+
+    const playTrack = (index, restart) => {
+        const audio = audios[index];
+
+        if (!audio) {
+            playlistMode = false;
+            currentIndex = 0;
+            setButtonPlaying(false);
+            return;
+        }
+
+        currentIndex = index;
+        playlistMode = true;
+        stopOtherTracks(audio);
+
+        if (restart) {
+            audio.currentTime = 0;
+        }
+
+        const playPromise = audio.play();
+
+        if (playPromise) {
+            playPromise.then(() => setButtonPlaying(true)).catch(() => {
+                playlistMode = false;
+                setButtonPlaying(false);
+            });
+        }
+    };
+
+    button.addEventListener("click", () => {
+        const currentAudio = audios[currentIndex];
+
+        if (playlistMode && currentAudio && !currentAudio.paused) {
+            currentAudio.pause();
+            setButtonPlaying(false);
+            return;
+        }
+
+        if (playlistMode && currentAudio && currentAudio.paused) {
+            playTrack(currentIndex, false);
+            return;
+        }
+
+        currentIndex = 0;
+
+        audios.forEach((audio) => {
+            audio.pause();
+            audio.currentTime = 0;
+        });
+
+        playTrack(0, true);
+    });
+
+    audios.forEach((audio, index) => {
+        audio.addEventListener("play", () => {
+            stopOtherTracks(audio);
+            currentIndex = index;
+
+            if (playlistMode) {
+                setButtonPlaying(true);
+            }
+        });
+
+        audio.addEventListener("pause", () => {
+            if (playlistMode && audios[currentIndex] === audio && !audio.ended) {
+                setButtonPlaying(false);
+            }
+        });
+
+        audio.addEventListener("ended", () => {
+            if (!playlistMode || currentIndex !== index) {
+                return;
+            }
+
+            playTrack(index + 1, true);
+        });
+    });
+})();
+</script>
