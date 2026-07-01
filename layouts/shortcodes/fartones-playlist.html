@@ -1,7 +1,7 @@
 <div class="fartones-playlist" data-fartones-playlist>
   <div class="fartones-cover">
     <img src="/photos/fartones.jpeg" alt="FarTones - Una noche en el Museum">
-    <button class="fartones-playlist__button" type="button" data-play-all aria-label="Reproducir concierto completo" aria-pressed="false"></button>
+    <button class="fartones-playlist__button" type="button" data-play-all aria-label="Play" aria-pressed="false"></button>
   </div>
 
   <ol class="fartones-playlist__tracks">
@@ -84,11 +84,13 @@
         return;
     }
 
-    const button = playlist.querySelector("[data-play-all]");
+    const buttonPlayAll = playlist.querySelector("[data-play-all]");
     const audios = Array.from(playlist.querySelectorAll("audio"));
     let currentIndex = 0;
     let playlistMode = false;
+    let playlistFlag = false;
 
+    // Pauses every track except the one that should remain active.
     const stopOtherTracks = (activeAudio) => {
         audios.forEach((audio) => {
             if (audio !== activeAudio) {
@@ -97,14 +99,19 @@
         });
     };
 
+    // Updates the central button state so CSS switches between play and pause.
     const setButtonPlaying = (isPlaying) => {
-        button.setAttribute("aria-pressed", isPlaying ? "true" : "false");
-        button.setAttribute("aria-label", isPlaying ? "Pausar concierto completo" : "Reproducir concierto completo");
+        buttonPlayAll.setAttribute("aria-pressed", isPlaying ? "true" : "false");
+        buttonPlayAll.setAttribute("aria-label", isPlaying ? "Pause" : "Play");
     };
 
+    // Plays one track by index and optionally starts it from the beginning.
     const playTrack = (index, restart) => {
+        playlistMode = true;
+        playlistFlag = true;
         const audio = audios[index];
 
+        //Last song, stop playlist mode and reset index to 0
         if (!audio) {
             playlistMode = false;
             currentIndex = 0;
@@ -113,7 +120,6 @@
         }
 
         currentIndex = index;
-        playlistMode = true;
         stopOtherTracks(audio);
 
         if (restart) {
@@ -124,58 +130,56 @@
 
         if (playPromise) {
             playPromise.then(() => setButtonPlaying(true)).catch(() => {
-                playlistMode = false;
                 setButtonPlaying(false);
             });
         }
     };
 
-    button.addEventListener("click", () => {
+    // Central button, full-concert
+    buttonPlayAll.addEventListener("click", () => {
         const currentAudio = audios[currentIndex];
 
-        if (playlistMode && currentAudio && !currentAudio.paused) {
+        if (currentAudio && !currentAudio.paused) {
             currentAudio.pause();
             setButtonPlaying(false);
             return;
         }
 
-        if (playlistMode && currentAudio && currentAudio.paused) {
+        if (currentAudio && currentAudio.paused) {
+            playlistMode = true;
             playTrack(currentIndex, false);
             return;
         }
-
-        currentIndex = 0;
-
-        audios.forEach((audio) => {
-            audio.pause();
-            audio.currentTime = 0;
-        });
-
-        playTrack(0, true);
     });
 
+    // Each track
     audios.forEach((audio, index) => {
+        // Keeps only one track playing
         audio.addEventListener("play", () => {
+            if (!playlistFlag) {
+                playlistMode = false;
+            }
+            playlistFlag = false;
             stopOtherTracks(audio);
             currentIndex = index;
-
-            if (playlistMode) {
-                setButtonPlaying(true);
-            }
+            setButtonPlaying(true); 
         });
 
+        // Reflects manual pauses in the central button
         audio.addEventListener("pause", () => {
-            if (playlistMode && audios[currentIndex] === audio && !audio.ended) {
+            if (audios[currentIndex] === audio && !audio.ended) {
                 setButtonPlaying(false);
             }
         });
 
+        // Advances to the next track when the current one finishes.
         audio.addEventListener("ended", () => {
             if (!playlistMode || currentIndex !== index) {
+                setButtonPlaying(false);
+                currentIndex = 0;
                 return;
             }
-
-            playTrack(index + 1, true);
+            playTrack(index+1, true);
         });
     });
 })();
