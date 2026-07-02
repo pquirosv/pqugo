@@ -265,24 +265,24 @@ audio {
     padding-top: 10px;
 }
 
-.fartones-playlist {
+.audio-playlist {
     margin-top: 1.5rem;
 }
 
-.fartones-cover {
+.audio-playlist__cover {
     position: relative;
     width: min(100%, 640px);
     margin-right: auto;
     margin-left: auto;
 }
 
-.fartones-cover img {
+.audio-playlist__cover img {
     display: block;
     width: 100%;
     height: auto;
 }
 
-.fartones-playlist__button {
+.audio-playlist__button {
     position: absolute;
     top: 50%;
     left: 50%;
@@ -300,12 +300,12 @@ audio {
     transform: translate(-50%, -50%);
 }
 
-.fartones-playlist__button:hover {
+.audio-playlist__button:hover {
     border-color: var(--color-text);
     background: rgba(255, 255, 255, 0.12);
 }
 
-.fartones-playlist__button::before {
+.audio-playlist__button::before {
     content: "";
     width: 0;
     height: 0;
@@ -315,7 +315,7 @@ audio {
     border-left: 1.1rem solid currentColor;
 }
 
-.fartones-playlist__button[aria-pressed="true"]::before {
+.audio-playlist__button[aria-pressed="true"]::before {
     width: 0.5rem;
     height: 1.3rem;
     margin-left: 0;
@@ -325,21 +325,21 @@ audio {
     border-left: 0.25rem solid currentColor;
 }
 
-.fartones-playlist__tracks {
+.audio-playlist__tracks {
     padding-left: 1.4rem;
 }
 
-.fartones-playlist__track {
+.audio-playlist__track {
     margin-bottom: 1rem;
 }
 
-.fartones-playlist__title {
+.audio-playlist__title {
     display: block;
     margin-bottom: 0.15rem;
     font-weight: bold;
 }
 
-.fartones-playlist audio {
+.audio-playlist audio {
     display: block;
     width: 100%;
 }

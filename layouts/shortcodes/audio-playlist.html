@@ -1,0 +1,154 @@
+{{- $playlistID := "" -}}
+{{- if .IsNamedParams -}}
+  {{- $playlistID = .Get "id" -}}
+{{- else -}}
+  {{- $playlistID = .Get 0 -}}
+{{- end -}}
+
+{{- if not $playlistID -}}
+  {{- errorf "audio-playlist shortcode requires a playlist id in %s" .Position -}}
+{{- end -}}
+
+{{- $playlist := index .Site.Data.playlists $playlistID -}}
+{{- if not $playlist -}}
+  {{- errorf "audio-playlist shortcode could not find data/playlists/%s.* in %s" $playlistID .Position -}}
+{{- end -}}
+
+{{- $playLabel := $playlist.playLabel | default "Play" -}}
+{{- $pauseLabel := $playlist.pauseLabel | default "Pause" -}}
+
+<div class="audio-playlist" data-audio-playlist data-play-label="{{ $playLabel }}" data-pause-label="{{ $pauseLabel }}">
+  {{- with $playlist.cover }}
+    <div class="audio-playlist__cover">
+      <img src="{{ .src | relURL }}" alt="{{ .alt | default $playlistID }}">
+      <button class="audio-playlist__button" type="button" data-play-all aria-label="{{ $playLabel }}" aria-pressed="false"></button>
+    </div>
+  {{- end }}
+
+  <ol class="audio-playlist__tracks">
+    {{- range $playlist.tracks }}
+      <li class="audio-playlist__track">
+        <span class="audio-playlist__title">{{ .title }}</span>
+        <audio controls preload="none" src="{{ .src | relURL }}"></audio>
+      </li>
+    {{- end }}
+  </ol>
+</div>
+
+<script>
+// Initializes every audio playlist rendered on the page.
+(() => {
+    const playlists = Array.from(document.querySelectorAll("[data-audio-playlist]"));
+
+    // Sets up state and event handlers for one playlist instance.
+    playlists.forEach((playlist) => {
+        if (playlist.dataset.audioPlaylistInitialized === "true") {
+            return;
+        }
+
+        playlist.dataset.audioPlaylistInitialized = "true";
+
+        const buttonPlayAll = playlist.querySelector("[data-play-all]");
+        const audios = Array.from(playlist.querySelectorAll("audio"));
+        const playLabel = playlist.dataset.playLabel || "Play";
+        const pauseLabel = playlist.dataset.pauseLabel || "Pause";
+        let currentIndex = 0;
+        let playlistMode = false;
+        let playlistFlag = false;
+
+        if (!buttonPlayAll || audios.length === 0) {
+            return;
+        }
+
+        // Pauses every track except the one that should remain active.
+        const stopOtherTracks = (activeAudio) => {
+            audios.forEach((audio) => {
+                if (audio !== activeAudio) {
+                    audio.pause();
+                }
+            });
+        };
+
+        // Keeps the central play button in sync with the current playback state.
+        const setButtonPlaying = (isPlaying) => {
+            buttonPlayAll.setAttribute("aria-pressed", isPlaying ? "true" : "false");
+            buttonPlayAll.setAttribute("aria-label", isPlaying ? pauseLabel : playLabel);
+        };
+
+        // Plays a track by index and optionally restarts it from the beginning.
+        const playTrack = (index, restart) => {
+            playlistMode = true;
+            playlistFlag = true;
+            const audio = audios[index];
+
+            if (!audio) {
+                playlistMode = false;
+                currentIndex = 0;
+                setButtonPlaying(false);
+                return;
+            }
+
+            currentIndex = index;
+            stopOtherTracks(audio);
+
+            if (restart) {
+                audio.currentTime = 0;
+            }
+
+            const playPromise = audio.play();
+
+            if (playPromise) {
+                playPromise.then(() => setButtonPlaying(true)).catch(() => {
+                    setButtonPlaying(false);
+                });
+            }
+        };
+
+        // Toggles playback from the central cover button.
+        buttonPlayAll.addEventListener("click", () => {
+            const currentAudio = audios[currentIndex];
+
+            if (currentAudio && !currentAudio.paused) {
+                currentAudio.pause();
+                setButtonPlaying(false);
+                return;
+            }
+
+            if (currentAudio && currentAudio.paused) {
+                playlistMode = true;
+                playTrack(currentIndex, false);
+            }
+        });
+
+        audios.forEach((audio, index) => {
+            // Updates playlist state when an individual audio control starts playing.
+            audio.addEventListener("play", () => {
+                if (!playlistFlag) {
+                    playlistMode = false;
+                }
+                playlistFlag = false;
+                stopOtherTracks(audio);
+                currentIndex = index;
+                setButtonPlaying(true);
+            });
+
+            // Reflects manual pauses in the central button.
+            audio.addEventListener("pause", () => {
+                if (audios[currentIndex] === audio && !audio.ended) {
+                    setButtonPlaying(false);
+                }
+            });
+
+            // Advances to the next track only when full-playlist mode is active.
+            audio.addEventListener("ended", () => {
+                if (!playlistMode || currentIndex !== index) {
+                    setButtonPlaying(false);
+                    currentIndex = 0;
+                    return;
+                }
+                playTrack(index + 1, true);
+            });
+        });
+    });
+})();
+</script>
