@@ -1,0 +1,40 @@
+{{ define "main" }}
+  {{- $entries := partial "journal/get-entries.html" . -}}
+  {{- $termRaw := printf "%v" (.Data.Term | default "") -}}
+  {{- $termSlug := urlize $termRaw -}}
+  {{- $termLabel := partial "journal/tag-label.html" $termRaw -}}
+  {{- $filteredEntries := slice -}}
+
+  {{- range $entries -}}
+    {{- $entry := . -}}
+    {{- $matches := false -}}
+
+    {{- range ($entry.Params.categories | default (slice)) -}}
+      {{- if eq (urlize (printf "%v" .)) $termSlug -}}
+        {{- $matches = true -}}
+      {{- end -}}
+    {{- end -}}
+
+    {{- if $matches -}}
+      {{- $filteredEntries = $filteredEntries | append $entry -}}
+    {{- end -}}
+  {{- end -}}
+
+  <p>{{ i18n "journal_tag_page_title" }} <strong>{{ $termLabel }}</strong>.</p>
+
+  {{- if eq (len $filteredEntries) 0 -}}
+    <p>{{ i18n "journal_empty_tag" }}</p>
+  {{- else -}}
+    <ul class="journal-archive-list">
+      {{- range $filteredEntries -}}
+        <li class="journal-archive-item">
+          <span class="journal-entry-meta">{{ .Date.Format "02/01/2006" }}</span>
+          <a href="{{ .RelPermalink }}">{{ .Title }}</a>
+        </li>
+      {{- end -}}
+    </ul>
+  {{- end -}}
+
+  <h4 class="filter-books">{{ i18n "journal_all_tags_title" }}</h4>
+  {{ partial "journal/render-tags.html" $entries }}
+{{ end }}

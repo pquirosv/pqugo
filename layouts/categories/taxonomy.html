@@ -1,0 +1,19 @@
+{{ define "main" }}
+  {{- $entries := partial "journal/get-entries.html" . -}}
+  {{- $categorizedEntries := slice -}}
+
+  {{- range $entries -}}
+    {{- $entry := . -}}
+    {{- with $entry.Params.categories -}}
+      {{- if gt (len .) 0 -}}
+        {{- $categorizedEntries = $categorizedEntries | append $entry -}}
+      {{- end -}}
+    {{- end -}}
+  {{- end -}}
+
+  {{- if eq (len $categorizedEntries) 0 -}}
+    <p>{{ i18n "journal_all_with_tag_empty" }}</p>
+  {{- else -}}
+    {{ partial "journal/render-tags.html" $categorizedEntries }}
+  {{- end -}}
+{{ end }}

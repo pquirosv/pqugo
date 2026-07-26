@@ -1,5 +1,5 @@
 {{- $entries := slice -}}
-{{- $allTags := slice -}}
+{{- $allCategories := slice -}}
 {{- $renderWhenEmpty := false -}}
 
 {{- if reflect.IsMap . -}}
@@ -7,7 +7,7 @@
     {{- $entries = . -}}
   {{- end -}}
   {{- with index . "terms" -}}
-    {{- $allTags = . -}}
+    {{- $allCategories = . -}}
   {{- end -}}
   {{- with index . "renderWhenEmpty" -}}
     {{- $renderWhenEmpty = . -}}
@@ -16,27 +16,27 @@
   {{- $entries = . | default (slice) -}}
 {{- end -}}
 
-{{- if eq (len $allTags) 0 -}}
+{{- if eq (len $allCategories) 0 -}}
   {{- range $entries -}}
-    {{- range (.Params.tags | default (slice)) -}}
-      {{- $allTags = $allTags | append . -}}
+    {{- range (.Params.categories | default (slice)) -}}
+      {{- $allCategories = $allCategories | append . -}}
     {{- end -}}
   {{- end -}}
 {{- end -}}
 
-{{- $allTags = sort (uniq $allTags) -}}
+{{- $allCategories = sort (uniq $allCategories) -}}
 
-{{- $tagsBase := "journal/tags" -}}
+{{- $categoriesBase := "journal/categories" -}}
 {{- if eq site.Language.Lang "es" -}}
-  {{- $tagsBase = "bitacora/tags" -}}
+  {{- $categoriesBase = "bitacora/categories" -}}
 {{- end -}}
 
-{{- if or (gt (len $allTags) 0) $renderWhenEmpty -}}
+{{- if or (gt (len $allCategories) 0) $renderWhenEmpty -}}
   <p class="books-tags">
-    {{- range $allTags -}}
+    {{- range $allCategories -}}
       {{- $term := printf "%v" . -}}
       {{- $label := partial "journal/tag-label.html" $term -}}
-      <a class="books-tag" href="{{ relLangURL (printf "%s/%s/" $tagsBase (urlize $term)) }}">#{{ $label }}</a>
+      <a class="books-tag" href="{{ relLangURL (printf "%s/%s/" $categoriesBase (urlize $term)) }}">#{{ $label }}</a>
     {{- end -}}
   </p>
 {{- end -}}

@@ -17,10 +17,12 @@ defaultContentLanguageInSubdir = false
       journal_entries = '/bitacora/:slugorfilename/'
     [languages.es.permalinks.taxonomy]
       tags = '/bitacora/tags/'
+      categories = '/bitacora/categories/'
       book_tags = '/libros/tags/'
       movie_tags = '/peliculas/tags/'
     [languages.es.permalinks.term]
       tags = '/bitacora/tags/:slug/'
+      categories = '/bitacora/categories/:slug/'
       book_tags = '/libros/tags/:slug/'
       movie_tags = '/peliculas/tags/:slug/'
   [languages.en]
@@ -32,15 +34,18 @@ defaultContentLanguageInSubdir = false
       journal_entries = '/journal/:slugorfilename/'
     [languages.en.permalinks.taxonomy]
       tags = '/journal/tags/'
+      categories = '/journal/categories/'
       book_tags = '/books/tags/'
       movie_tags = '/movies/tags/'
     [languages.en.permalinks.term]
       tags = '/journal/tags/:slug/'
+      categories = '/journal/categories/:slug/'
       book_tags = '/books/tags/:slug/'
       movie_tags = '/movies/tags/:slug/'
 
 [taxonomies]
   tag = 'tags'
+  category = 'categories'
   book_tag = 'book_tags'
   movie_tag = 'movie_tags'
 

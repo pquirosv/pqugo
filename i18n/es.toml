@@ -35,16 +35,16 @@ other = "Anterior"
 other = "Siguiente"
 
 [journal_all_tags_title]
-other = "Filtrar por etiqueta"
+other = "Filtrar por categoría"
 
 [journal_tag_page_title]
-other = "Entradas con la etiqueta"
+other = "Entradas en la categoría"
 
 [journal_empty_tag]
-other = "No hay entradas para esta etiqueta."
+other = "No hay entradas para esta categoría."
 
 [journal_all_with_tag_empty]
-other = "Todavía no hay entradas con tags cargados."
+other = "Todavía no hay entradas con categorías cargadas."
 
 [books_category_narrative]
 other = "Narrativa"
