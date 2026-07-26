@@ -109,6 +109,9 @@ p > a:only-child > img:only-child {
     margin-right: auto;
     margin-left: auto;
 }
+.site-header {
+   font-size: 35px;
+}
 
 h1 {
     font-size: 30px;
