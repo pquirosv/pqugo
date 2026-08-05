@@ -1,15 +1,5 @@
 {{- $entries := partial "journal/get-entries.html" .Page -}}
 {{- $archivePage := .Page.Site.GetPage "journal_entries/archive" -}}
-{{- $categorizedEntries := slice -}}
-{{- range $entries -}}
-  {{- $entry := . -}}
-  {{- with $entry.Params.categories -}}
-    {{- if gt (len .) 0 -}}
-      {{- $categorizedEntries = $categorizedEntries | append $entry -}}
-    {{- end -}}
-  {{- end -}}
-{{- end -}}
-{{- $hasCategorizedEntries := gt (len $categorizedEntries) 0 -}}
 
 <section class="journal-section">
 
@@ -29,8 +19,3 @@
     {{- end }}
   </div>
 
-  {{- if $hasCategorizedEntries -}}
-    <h4 class="filter-books">{{ i18n "journal_all_tags_title" }}</h4>
-    {{ partial "journal/render-tags.html" $categorizedEntries }}
-  {{- end -}}
-</section>

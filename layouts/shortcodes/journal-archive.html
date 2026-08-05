@@ -1,5 +1,17 @@
 {{- $entries := partial "journal/get-entries.html" .Page -}}
 
+{{- $categorizedEntries := slice -}}
+{{- range $entries -}}
+  {{- $entry := . -}}
+  {{- with $entry.Params.categories -}}
+    {{- if gt (len .) 0 -}}
+      {{- $categorizedEntries = $categorizedEntries | append $entry -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+{{- $hasCategorizedEntries := gt (len $categorizedEntries) 0 -}}
+
+
 {{ if gt (len $entries) 0 }}
   <ul class="journal-archive-list">
     {{ range $entries }}
@@ -12,3 +24,8 @@
 {{ else }}
   <p>{{ i18n "journal_empty" }}</p>
 {{ end }}
+
+{{- if $hasCategorizedEntries -}}
+  <h4 class="filter-books">{{ i18n "journal_all_tags_title" }}</h4>
+  {{ partial "journal/render-tags.html" $categorizedEntries }}
+{{- end -}}
