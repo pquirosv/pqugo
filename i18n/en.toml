@@ -61,6 +61,9 @@ other = "No books are available yet."
 [books_empty_tag]
 other = "There are no books for this tag yet."
 
+[books_subcategory_aphorism]
+other = "Aphorism"
+
 [books_subcategory_biography]
 other = "Biography"
 

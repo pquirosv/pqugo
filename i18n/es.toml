@@ -73,6 +73,9 @@ other = "Todavía no hay libros cargados."
 [books_empty_tag]
 other = "No hay libros para esta etiqueta."
 
+[books_subcategory_aphorism]
+other = "Aforismo"
+
 [books_subcategory_biography]
 other = "Biografía"
 
