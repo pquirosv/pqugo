@@ -538,6 +538,23 @@ audio {
     height: auto;
 }
 
+.journal-entry-content table {
+    width: 80%;
+    margin: 1.5rem 0;
+    border: 1px solid #ffffff;
+    border-collapse: collapse;
+}
+
+.journal-entry-content table.small-table {
+    width: 50%;
+}
+
+.journal-entry-content th,
+.journal-entry-content td {
+    padding: 0.45em 0.7em;
+    border: 1px solid #ffffff;
+}
+
 .journal-entry-content code {
     font-family: "Fira Code", monospace;
     font-size: 0.9em;
