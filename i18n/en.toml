@@ -67,6 +67,9 @@ other = "Aphorism"
 [books_subcategory_biography]
 other = "Biography"
 
+[books_subcategory_diary]
+other = "Diary"
+
 [books_subcategory_economy]
 other = "Economy"
 
