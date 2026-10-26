@@ -133,6 +133,9 @@ other = "Tecnología"
 [books_subcategory_culture]
 other = "Cultura"
 
+[books_subcategory_article]
+other = "Artículo"
+
 [books_all_with_tab_empty]
 other = "Todavía no hay libros con tags cargados."
 

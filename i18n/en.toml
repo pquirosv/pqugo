@@ -127,6 +127,9 @@ other = "Theatre"
 [books_subcategory_religion]
 other = "Religion"
 
+[books_subcategory_article]
+other = "Article"
+
 [books_all_with_tab_empty]
 other = "No books with tags are available yet."
 
